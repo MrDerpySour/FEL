@@ -32,6 +32,23 @@
   <ItemGroup>
     <ResourceCompile Include="FEL.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="byte_code.hpp" />
+    <ClInclude Include="command.hpp" />
+    <ClInclude Include="context.hpp" />
+    <ClInclude Include="event.hpp" />
+    <ClInclude Include="fel.hpp" />
+    <ClInclude Include="flag.hpp" />
+    <ClInclude Include="flag_list.hpp" />
+    <ClInclude Include="helper.hpp" />
+    <ClInclude Include="interpreter.hpp" />
+    <ClInclude Include="manager.hpp" />
+    <ClInclude Include="Modules\Variables\memory.hpp" />
+    <ClInclude Include="Modules\Variables\variable.hpp" />
+    <ClInclude Include="Modules\Variables\var_commands.hpp" />
+    <ClInclude Include="Modules\Variables\var_manager.hpp" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9EA25246-5601-4C07-8896-B380B4C18D6E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
