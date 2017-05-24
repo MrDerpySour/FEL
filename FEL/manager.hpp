@@ -125,11 +125,10 @@ class Manager {
     
  private:
   // General
+  std::unordered_map<int, Event> events_;
   std::unordered_map<std::string, CommandClass*> custom_commands_;
 
   std::string file_path_ = "";
-
-  std::unordered_map<int, Event> events_;
 
   FlagList flags_;
   Context context_;
