@@ -1,5 +1,5 @@
 # Flag Event Language | Documentation
 
-### Index
+## Index
 
-.. * [Getting Started](getting-started.html)
+* [Getting Started](getting-started.html)
