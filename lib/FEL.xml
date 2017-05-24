@@ -4,6 +4,43 @@
         "FEL"
     </assembly>
     <members>
+        <member name="M:fel.Manager.loadModules">
+Loads all the modules
+
+</member>
+        <member name="M:fel.Manager.loadLinkedFiles">
+Loads all the linked files
+
+</member>
+        <member name="M:fel.Manager.executeBytecode(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Executes the bytecode
+@return Whether the operation executed without any errors or not
+
+</member>
+        <member name="M:fel.Manager.checkFatalError">
+@return Whether or not a fatal error has occured
+@return Whether there are any fatal errors or not
+
+</member>
+        <member name="M:fel.Manager.restoreState">
+Restores the last saved instructions
+
+</member>
+        <member name="M:fel.Manager.saveState">
+Saves the current instructions
+
+</member>
+        <member name="M:fel.Manager.checkInfiniteLoop(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.Boolean!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Checks if you're inside an infinite loop
+@param evnt_id The ID of the event you're going to call
+@param add_id Whether or not to add the ID to the infinite loop's watch list
+@return Whether or not you're executing an infinite loop or not
+
+</member>
+        <member name="M:fel.Manager.context">
+@return A pointer to the manager's context
+
+</member>
         <member name="M:fel.Manager.printDebug">
 Prints out all debug information
 
@@ -22,21 +59,25 @@ Registers a custom function
         <member name="M:fel.Manager.loadFlags(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Loads the flags
 @param file_path Filepath to the file
+@return Whether the operation executed without any errors or not
 
 </member>
         <member name="M:fel.Manager.saveFlags(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Saves all the flags
 @param file_path Where to save the flags to
+@return Whether the operation executed without any errors or not
 
 </member>
         <member name="M:fel.Manager.executeEvent(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Execute a subsidairy event, not meant to be used without calling execute() first
+Execute a subsidairy event, meant to be used by custom commands
 @param evnt_id The ID of the event
+@return Whether the operation executed without any errors or not
 
 </member>
         <member name="M:fel.Manager.execute(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 Executes an event
 @param evnt_id The ID of the event
+@return Whether the operation executed without any errors or not
 
 </member>
         <member name="M:fel.Manager.load(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
@@ -57,10 +98,54 @@ Creates an event from a string of code
 
 </member>
         <member name="M:fel.Interpreter.compile(fel.Event*,std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-Interprets an event
+Interprets a specific event
 @param evnt A pointer to the Event to compile
 @param file_path The filepath to the event file
 @param event_id What event to load, -1 = all
+
+</member>
+        <member name="M:fel.Event.#ctor(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.vector&lt;fel.Instruction,std.allocator&lt;fel.Instruction&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+@param id The event's id
+@param instructions The event's instructions
+
+</member>
+        <member name="M:fel.Context.getModuleVariablesMemory">
+@return A pointer to the VariablesManager, returns nullptr if it doesn't exist
+
+</member>
+        <member name="M:fel.Context.getVarsFilePath">
+@return The #vars filepath (if any)
+
+</member>
+        <member name="M:fel.Context.getFlagsFilePath">
+@return The #flags filepath (if any)
+
+</member>
+        <member name="M:fel.Context.getModuleDirectives">
+@return All called #module directives
+
+</member>
+        <member name="M:fel.Context.getLinkDirectives">
+@return All called #link directives
+
+</member>
+        <member name="M:fel.Context.ignoreCase">
+@return Whether #ignorecase has been called or not
+
+</member>
+        <member name="M:fel.Context.debugMode">
+@return Whether #debug has been called or not
+
+</member>
+        <member name="M:fel.Context.parseVariableString(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Parses a string containing variables
+@param unparsed The unparsed string
+@return The parsed string
+
+</member>
+        <member name="M:fel.Instruction.#ctor(fel.ByteCode!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+@param byte_code The bytecode of the instruction
+@param parameters The parameters of the instruction
 
 </member>
         <member name="T:fel.ByteCode">
@@ -72,16 +157,9 @@ A function to check whether an id is already present
 @return Whether or not the id is already present
 
 </member>
-        <member name="M:fel.FlagList.op_Subscript(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-I didn't return it as a pointer because some of the operator behaviour gets funky
-</member>
         <member name="M:fel.FlagList.at(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
 @param index The index of the Flag
 @return The Flag at the given index
-
-</member>
-        <member name="M:fel.FlagList.max_size">
-@return The max size of the list
 
 </member>
         <member name="M:fel.FlagList.size">
@@ -108,6 +186,10 @@ Adds a new Flag at the back
 @throw flag_redefinition_exception
 
 </member>
+        <member name="M:fel.FlagList.Dispose">
+Calls destroy()
+
+</member>
         <member name="T:fel.flag_redefinition_exception">
 An exception that gets thrown when the ID was already present
 
@@ -126,7 +208,6 @@ Sets the state of the flag
 
 </member>
         <member name="M:fel.Flag.#ctor(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
-ID is a uint16_t, parameter is an int to avoid overflow errors
 @param id The id to assign to the flag
 @throw flag_invalid_id_exception
 

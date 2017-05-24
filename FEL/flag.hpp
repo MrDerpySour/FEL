@@ -19,18 +19,11 @@ public:
 class Flag {
 public:
   /**
-   * ID is a uint16_t, parameter is an int to avoid overflow errors
    * @param id The id to assign to the flag
    * @throw flag_invalid_id_exception
    */
   FEL_API Flag(const int& id) {
-    if (id < 0) {
-      id_ = 0;
-      printf("Error: invalid flag id\n");
-      throw flag_invalid_id_exception();
-    } else if (id > UINT16_MAX) {
-      id_ = 0;
-      printf("Error: invalid flag id\n");
+    if (id < 0 || id > UINT16_MAX) {
       throw flag_invalid_id_exception();
     } else {
       id_ = id;

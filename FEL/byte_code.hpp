@@ -20,11 +20,10 @@ enum ByteCode {
   kBld,
   kSys,
   kRpt,
-  kEnd,   // End
-  kFelNone, // No bytecode, used for default initialization
-  kFelFunc, // Custom command
-  kFelForbidden, // Contains errors, shouldn't execute
-  kFelError,     // Invokes error and cleanup
+  kEnd,                // End
+  kFelNone,            // No bytecode, used for default initialization
+  kFelFunc,            // Custom command
+  kFelError,           // Contains errors, shouldn't execute
   kFelBegin = kStart,  // Iterator first
   kFelEnd = kEnd       // Iterator last
 };
@@ -33,6 +32,11 @@ extern const char* ByteCodeString[];
 
 struct Instruction {
   FEL_API Instruction() {}
+
+  /**
+   * @param byte_code The bytecode of the instruction
+   * @param parameters The parameters of the instruction
+   */
   FEL_API Instruction(const ByteCode& byte_code, const std::string& parameters) :
     byte_code(byte_code), parameters(parameters) {}
 

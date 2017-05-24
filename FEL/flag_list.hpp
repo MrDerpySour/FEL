@@ -13,15 +13,19 @@ namespace fel {
  * An exception that gets thrown when the ID was already present
  */
 class flag_redefinition_exception : public std::exception {
-public:
+ public:
   FEL_API virtual const char* what() const throw() {
     return "A flag with that ID already exists";
   }
 };
 
 class FlagList {
-public:
+ public:
   FEL_API FlagList() {}
+
+  /**
+   * Calls destroy()
+   */
   FEL_API ~FlagList();
 
   /**
@@ -54,28 +58,19 @@ public:
   FEL_API const size_t& size() const& noexcept { return data_.size(); }
 
   /**
-   * @return The max size of the list
-   */
-  FEL_API const size_t& max_size() const& noexcept { return data_.max_size(); }
-
-  /**
    * @param index The index of the Flag
    * @return The Flag at the given index
    */
-  FEL_API Flag& at(const int& index) const {
+  FEL_API Flag* at(const int& index) const {
     if (index < 0)
-      return Flag(0);
+      return nullptr;
 
-    if ((unsigned)index < data_.size())
-      return *data_[index];
-    else
-      return Flag(0);
+    return ((unsigned)index < data_.size()) ? data_[index] : nullptr;
   }
 
   /* Operators */
 
-  /// I didn't return it as a pointer because some of the operator behaviour gets funky
-  FEL_API Flag& operator[](const int& index) const& noexcept {
+  FEL_API Flag* operator[](const int& index) const& noexcept {
     return at(index);
   }
 

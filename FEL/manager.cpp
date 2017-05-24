@@ -84,7 +84,7 @@ bool Manager::executeEvent(const int& evnt_id) {
 
   // Error catching
 
-  if (context_.current_instructions[0].byte_code == kFelForbidden) {
+  if (context_.current_instructions[0].byte_code == kFelError) {
     printf("Error: event '%d' didn't compile correctly\n", it->second.id);
     return false;
   }
@@ -119,7 +119,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
     switch (context_.current_instructions[context_.instruction_index].byte_code) {
 
-      case kFelForbidden: {
+      case kFelError: {
         printf("Error: event '%d' didn't compile correctly\n", event_executed);
         return false; }
 
@@ -348,13 +348,14 @@ bool Manager::executeBytecode(const int& event_executed) {
         break; }
     }
   }
+  return false;
 }
 
 bool Manager::saveFlags(const std::string& file_path) {
   std::string content = "";
 
   for (size_t i = 0; i < flags_.size(); ++i) {
-    content += std::to_string(flags_[i].id()) + '=' + std::to_string(flags_[i].is_set()) + '\n';
+    content += std::to_string(flags_[i]->id()) + '=' + std::to_string(flags_[i]->is_set()) + '\n';
   }
 
   return helper::createFile(file_path, content);

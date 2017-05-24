@@ -13,14 +13,14 @@ namespace fel {
 class Interpreter {
  public:
   /**
-   * Interprets an event
+   * Interprets a specific event
    * @param evnt A pointer to the Event to compile
    * @param file_path The filepath to the event file
    * @param event_id What event to load, -1 = all
    */
   FEL_API static void compile(Event* evnt,
-                      const std::string& file_path,
-                      const int& event_id = -1);
+                              const std::string& file_path,
+                              const int& event_id = -1);
 
   /**
    * Creates an event from a string of code

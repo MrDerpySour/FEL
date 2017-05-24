@@ -11,6 +11,11 @@ namespace fel {
 
 struct Event {
   FEL_API Event() {}
+
+  /**
+   * @param id The event's id
+   * @param instructions The event's instructions
+   */
   FEL_API Event(const int& id, const std::vector<Instruction>& instructions) :
     id(id), instructions(instructions) {}
 

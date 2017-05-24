@@ -34,24 +34,28 @@ class Manager {
   /**
    * Executes an event
    * @param evnt_id The ID of the event
+   * @return Whether the operation executed without any errors or not
    */
   FEL_API bool execute(const int& evnt_id);
 
   /**
-   * Execute a subsidairy event, not meant to be used without calling execute() first
+   * Execute a subsidairy event, meant to be used by custom commands
    * @param evnt_id The ID of the event
+   * @return Whether the operation executed without any errors or not
    */
   FEL_API bool executeEvent(const int& evnt_id);
 
   /**
    * Saves all the flags
    * @param file_path Where to save the flags to
+   * @return Whether the operation executed without any errors or not
    */
   FEL_API bool saveFlags(const std::string& file_path);
 
   /**
    * Loads the flags
    * @param file_path Filepath to the file
+   * @return Whether the operation executed without any errors or not
    */
   FEL_API bool loadFlags(const std::string& file_path);
 
@@ -73,24 +77,54 @@ class Manager {
    */
   FEL_API void printDebug();
 
+  /**
+   * @return A pointer to the manager's context
+   */
   FEL_API const Context* context() const { return &context_; }
 
+  /**
+   * Checks if you're inside an infinite loop
+   * @param evnt_id The ID of the event you're going to call
+   * @param add_id Whether or not to add the ID to the infinite loop's watch list
+   * @return Whether or not you're executing an infinite loop or not
+   */
   FEL_API bool checkInfiniteLoop(const int& evnt_id, const bool& add_id = true);
 
- private:
-  FEL_API bool executeBytecode(const int& event_executed);
-  
+  /**
+   * Saves the current instructions
+   */
+  FEL_API void saveState();
+
+  /**
+   * Restores the last saved instructions
+   */
+  FEL_API void restoreState();
+
+  /**
+   * @return Whether or not a fatal error has occured
+   * @return Whether there are any fatal errors or not
+   */
   FEL_API bool checkFatalError();
 
-  FEL_API void loadLinkedFiles();
-  FEL_API void loadModules();
-
-  FEL_API void saveState();
-  FEL_API void restoreState();
-  
  private:
-  // --- Modules ---
+  /**
+   * Executes the bytecode
+   * @return Whether the operation executed without any errors or not
+   */
+  FEL_API bool executeBytecode(const int& event_executed);
+  
+  /**
+   * Loads all the linked files
+   */
+  FEL_API void loadLinkedFiles();
 
+  /**
+   * Loads all the modules
+   */
+  FEL_API void loadModules();
+    
+ private:
+  // General
   std::unordered_map<std::string, CommandClass*> custom_commands_;
 
   std::string file_path_ = "";
@@ -108,7 +142,6 @@ class Manager {
   std::vector<int> infinite_loop_;
   std::string msg_ = "No error message available";
   bool fatal_error_ = false;
-  
 };
 
 }  // namespace fel

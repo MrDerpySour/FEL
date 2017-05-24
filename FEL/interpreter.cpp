@@ -41,7 +41,7 @@ void Interpreter::compile(Event* evnt,
               }
             } catch (...) {
               printf("Error: ID couldn't be found\n");
-              evnt->instructions = { Instruction(kFelForbidden, line) };
+              evnt->instructions = { Instruction(kFelError, line) };
               return;
             }
           }
@@ -154,7 +154,7 @@ void Interpreter::inject(Event* evnt, const std::string& code, Context* context)
     }
     catch (...) {
       printf("Error: ID couldn't be found\n");
-      evnt->instructions = { Instruction(kFelForbidden, line) };
+      evnt->instructions = { Instruction(kFelError, line) };
       return;
     }
   }
@@ -167,7 +167,7 @@ void Interpreter::inject(Event* evnt, const std::string& code, Context* context)
   // Check if end is defined
   if (line.back() != '|') {
     printf("Error: no end marker found\n");
-    evnt->instructions = { Instruction(kFelForbidden, line) };
+    evnt->instructions = { Instruction(kFelError, line) };
     return;
   }
 
@@ -214,7 +214,7 @@ void Interpreter::inject(Event* evnt, const std::string& code, Context* context)
 
     if (index == -1) {
       printf("Error: no parameter block openeded\n");
-      evnt->instructions = { Instruction(kFelForbidden, unparsed_cmds[i]) };
+      evnt->instructions = { Instruction(kFelError, unparsed_cmds[i]) };
       return;
     }
 
@@ -225,13 +225,13 @@ void Interpreter::inject(Event* evnt, const std::string& code, Context* context)
     
     if (closing_brace_index == -1) {
       printf("Error: unmatched brackets in parameters block\n");
-      evnt->instructions = { Instruction(kFelForbidden, tmp[1]) };
+      evnt->instructions = { Instruction(kFelError, tmp[1]) };
       return;
     }
     
     if (tmp[1].substr(closing_brace_index).length() > 1) {
       printf("Error: trailing tokens after parameters block found\n\t\tTokens: '%s'\n", tmp[1].substr(closing_brace_index + 1).c_str());
-      evnt->instructions = { Instruction(kFelForbidden, tmp[1].substr(closing_brace_index + 1)) };
+      evnt->instructions = { Instruction(kFelError, tmp[1].substr(closing_brace_index + 1)) };
       return;
     }
     
