@@ -1,0 +1,177 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        "FEL"
+    </assembly>
+    <members>
+        <member name="M:fel.Manager.printDebug">
+Prints out all debug information
+
+</member>
+        <member name="M:fel.Manager.is_set(System.UInt16!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Checks whether or not a flag at id is set
+@param id The flag_id to check
+
+</member>
+        <member name="M:fel.Manager.registerFunction(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte!System.Runtime.CompilerServices.IsConst*,fel.CommandClass*)">
+Registers a custom function
+@param syntax The syntax for the function
+@param func A pointer to the function
+
+</member>
+        <member name="M:fel.Manager.loadFlags(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Loads the flags
+@param file_path Filepath to the file
+
+</member>
+        <member name="M:fel.Manager.saveFlags(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Saves all the flags
+@param file_path Where to save the flags to
+
+</member>
+        <member name="M:fel.Manager.executeEvent(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Execute a subsidairy event, not meant to be used without calling execute() first
+@param evnt_id The ID of the event
+
+</member>
+        <member name="M:fel.Manager.execute(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Executes an event
+@param evnt_id The ID of the event
+
+</member>
+        <member name="M:fel.Manager.load(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Loads a file with multiple events with each event on a different line
+@param file_path The filepath to the file
+
+</member>
+        <member name="M:fel.Interpreter.inject(fel.Event*,std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,fel.Context*)">
+Compile an event with a specific string of code
+@param evnt A pointer to the event to compile it to
+@param code The string of code to compile
+
+</member>
+        <member name="M:fel.Interpreter.inject(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,fel.Context*)">
+Creates an event from a string of code
+@param code The code to compile it from
+@return An event created with the code
+
+</member>
+        <member name="M:fel.Interpreter.compile(fel.Event*,std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Interprets an event
+@param evnt A pointer to the Event to compile
+@param file_path The filepath to the event file
+@param event_id What event to load, -1 = all
+
+</member>
+        <member name="T:fel.ByteCode">
+This enum must always be in-sync with the ByteCodeString array in byte_code.cpp
+</member>
+        <member name="M:fel.FlagList.doesIdExist(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+A function to check whether an id is already present
+@param id The id to check for
+@return Whether or not the id is already present
+
+</member>
+        <member name="M:fel.FlagList.op_Subscript(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+I didn't return it as a pointer because some of the operator behaviour gets funky
+</member>
+        <member name="M:fel.FlagList.at(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+@param index The index of the Flag
+@return The Flag at the given index
+
+</member>
+        <member name="M:fel.FlagList.max_size">
+@return The max size of the list
+
+</member>
+        <member name="M:fel.FlagList.size">
+@return How many elements are active in the list
+
+</member>
+        <member name="M:fel.FlagList.at_id(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Returns the flag at the given id, creates a new flag if it didn't exist already
+@param id The id of the flag
+@return A pointer to the flag at the given id
+
+</member>
+        <member name="M:fel.FlagList.destroy">
+Frees all the memory
+
+</member>
+        <member name="M:fel.FlagList.pop">
+Pops the last Flag
+
+</member>
+        <member name="M:fel.FlagList.add(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Adds a new Flag at the back
+@param id The id of the new Flag
+@throw flag_redefinition_exception
+
+</member>
+        <member name="T:fel.flag_redefinition_exception">
+An exception that gets thrown when the ID was already present
+
+</member>
+        <member name="M:fel.Flag.id">
+@return The flag's id
+
+</member>
+        <member name="M:fel.Flag.set(System.Boolean!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Sets the state of the flag
+@param state The new state
+
+</member>
+        <member name="M:fel.Flag.is_set">
+@return Whether or not the flag is set
+
+</member>
+        <member name="M:fel.Flag.#ctor(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+ID is a uint16_t, parameter is an int to avoid overflow errors
+@param id The id to assign to the flag
+@throw flag_invalid_id_exception
+
+</member>
+        <member name="M:fel.helper.parseMathString(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;)">
+Parses a math equation in string format
+@param expression The expression to pars
+@return The result of the expression
+
+</member>
+        <member name="M:fel.helper.getInt(System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.Int32!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Returns a random integer between the specified range
+@param min The minimum range
+@param max The maximum range
+@return The random integer
+
+</member>
+        <member name="M:fel.helper.createFile(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Creates a file
+@param file_path The path to the file
+@param contents The contents of the file
+@return Whether or not the operation was successful
+
+</member>
+        <member name="M:fel.helper.fileExists(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+Checks whether or not a file exists
+@param file_path The path to the file
+@return Whether or not it exists
+
+</member>
+        <member name="M:fel.helper.str_replace_all(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.ch">
+Replaces every occurance of a string with another string
+@param str The string to modify
+@param find The string to find
+@param replace The string to replace it with
+@return A copy of the processed string
+
+</member>
+        <member name="M:fel.helper.tokenize(std.basic_string&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte,std.char_traits{System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte},std.allocator&lt;System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte&gt;&gt;!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced,System.Boolean!System.Runtime.CompilerServices.IsConst*!System.Runtime.CompilerServices.IsImplicitlyDereferenced)">
+It takes a string and returns a vector of each word seperated by the seperator
+@param str The string to tokenize
+@param seperator The seperation char
+@param delete_empty Whether or not it should delete empty entries (e.g. mutliple seperators in a row)
+@return A vector of all the string spliced at the seperator
+
+</member>
+    </members>
+</doc>
