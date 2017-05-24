@@ -2,4 +2,4 @@
 
 ### Index
 
-[Getting Started](/getting-started.html)
+[Getting Started](FEL/getting-started.html)
