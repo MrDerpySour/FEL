@@ -1,4 +1,4 @@
-<h3 align="center"><a href="index.html">Back</a></h3>
+<h3 align="center"><a href="index.html">Index</a></h3>
 
 # FEL | Getting Started (C++)
 -----
@@ -71,4 +71,4 @@ int main() {
 ```
 And that's the basics of loading and executing events in FEL.
 
-<h3 align="center"><a href="index.html">Back</a></h3>
+<h3 align="center"><a href="index.html">Index</a></h3>
