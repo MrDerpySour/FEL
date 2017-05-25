@@ -39,7 +39,7 @@ It keeps in mind the correct order and will also give math in between parenthese
 Example:
 ```
 1>EXE[%id% + 1]|
-2>REG[f|float|5]-SET[float|%float% * %float%]-EXE[%float%]|
+2>REG[f|float|5]-SET[f|%f% * %f%]-EXE[%f%]|
 
 25>PRI[Hello!]|
 ```
