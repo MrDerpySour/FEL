@@ -41,7 +41,7 @@ To pass in parameters, you open a parameter block with the square brackets `[ ]`
 Even if a command takes no parameters, you still open a parameter block.  
 Since we're making a Hello world script, we'll pass in "Hello, world!" as the syntax.
 
-  NOTE: Escape codes line `\n`, `\b`, `\t` will work.
+  NOTE: Escape codes line `\n`, `\t`, `\r`, `\b`, `\v`, `\f`, `\a` and `\0` will work.
 
 Event so far:
 ```
