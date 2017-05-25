@@ -1,5 +1,8 @@
 # Flag Event Language | Documentation
 -----
+
+Flag Event Language or FEL is a simple scripting language inspired by Cave Story's [TSC Language](http://www.cavestory.org/guides/basicmodding/guide/tsc.html) but aims to deliver a more customizable, flexible and easier scripting language.
+
 # Index
 
 ## FEL
@@ -12,4 +15,8 @@
 * [Miscellaneous](fel-misc.html)
 
 ## C++
-* [Getting Started (C++)](getting-started-cpp.html)
+* [Loading & Executing](loading-executing.html)
+
+## Misc
+* [Special Thanks](special-thanks.md)
+* [Contact](contact.md)
