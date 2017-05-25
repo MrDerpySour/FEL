@@ -1,6 +1,6 @@
 # Syntax
 -----
-### Core
+## Core
 
 | Syntax | Meaning     | Description                         | Parameters          |
 |:-------|:------------|:------------------------------------|:--------------------|
@@ -16,7 +16,7 @@
 | RPT    | Repeat      | Repeats an event                    | [event_id\|count]   |
 
 ## Modules
-
+-----
 ### Variables
 
 | Syntax | Meaning  | Description                                   | Parameters             |
