@@ -81,5 +81,5 @@ And now we add the `|` to end the event.
 The structuring actually has some "philosophy" behind it.  
 The idea was that it resembled a pipeline with the `>` being the beginning, the `-` being the pipe and the `|` being the stop.  
 
-<h3 align="center"><a href="getting-started-cpp.html">Next</a></h3>
+<h3 align="center"><a href="directives.html">Next</a></h3>
 <h3 align="center"><a href="index.html">Index</a></h3>
