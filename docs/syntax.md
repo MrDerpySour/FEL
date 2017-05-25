@@ -1,4 +1,4 @@
-<h3 align="center" link="index.html">Back</h3>
+<a align="center" link="index.html">Back</a>
 
 # Syntax
 -----
