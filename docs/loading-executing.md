@@ -50,7 +50,7 @@ int main() {
   return 0;
 }
 ```
-  NOTE: use the `execute` event and NOT the `executeEvent` function. [See why.](custom-commands.html)
+   NOTE: use the `execute` function and NOT the `executeEvent` function. [See why.](custom-commands.html)
   
 These are the basics of loading and executing events.
 
