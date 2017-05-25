@@ -59,7 +59,7 @@ It is recommended to add your functions right after you're calling `load` to avo
 
 ## execute VS executeEvent
 
-In [this](loading_executing.html) I said that when executing an event, you should always use the `execute` function.  
+In [this](loading-executing.html) tutorial I said that when executing an event, you should always use the `execute` function.  
 So when do you use the executeEvent function? Inside custom commands!
 
 If you want to execute an event inside a custom coammand, you should use use the `executeEvent` function.  
