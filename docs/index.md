@@ -23,5 +23,3 @@ Flag Event Language or FEL is a simple scripting language inspired by Cave Story
 ## Misc
 * [Special Thanks](special-thanks.html)
 * [Contact](contact.html)
-
-FEL is made by Tom Mol.
