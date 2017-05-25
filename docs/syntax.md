@@ -19,12 +19,12 @@
 
 ### Variables
 
-|Syntax|Meaning|Description|Parameters|
-| --- | --- | --- | --- |
-| REG | Register | Registers a variable | [name\|type\|value] |
-| DEL | Delete | Deletes a variable | [name] |
-| SET | Set | Sets a variable | [name\|value] |
-| CMP | Compare | Compares 2 values, jumps to event_id if equal | [val1\|val2\|event_id] |
+| Syntax  | Meaning | Description                                  | Parameters             |
+|:--------|:--------|:---------------------------------------------|:-----------------------|
+| REG     | Register| Registers a variable                         | [name\|type\|value]    |
+| DEL     | Delete  | Deletes a variable                           | [name]                 |
+| SET     | Set     | Sets a variable                              | [name\|value]          |
+| CMP     | Compare | Compares 2 values, jumps to event_id if equal| [val1\|val2\|event_id] |
 
 | head1        | head two          | three |
 |:-------------|:------------------|:------|
