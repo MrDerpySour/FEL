@@ -27,3 +27,5 @@
 | DEL    | Delete   | Deletes a variable                            | [name]                 |
 | SET    | Set      | Sets a variable                               | [name\|value]          |
 | CMP    | Compare  | Compares 2 values, jumps to event_id if equal | [val1\|val2\|event_id] |
+
+<h3 align="center"><a href="index.html">Back</a></h3>
