@@ -23,3 +23,10 @@
 | DEL | Delete | Deletes a variable | [name] |
 | SET | Set | Sets a variable | [name\|value] |
 | CMP | Compare | Compares 2 values, jumps to event_id if equal | [val1\|val2\|event_id] |
+
+| head1        | head two          | three |
+|:-------------|:------------------|:------|
+| ok           | good swedish fish | nice  |
+| out of stock | good and plenty   | nice  |
+| ok           | good `oreos`      | hmm   |
+| ok           | good `zoute` drop | yumm  |
