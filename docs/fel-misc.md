@@ -50,8 +50,8 @@ The format is pretty simple, it starts with a `>` followed by the name, type and
 
 Example:
 ```
->hello|string|Hello, world!|
->number|float|3.1415|
+>hello|string|Hello, world!<
+>number|float|3.1415<
 ```
 
 <h3 align="center"><a href="index.html">Index</a></h3>
