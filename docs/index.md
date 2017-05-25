@@ -3,4 +3,5 @@
 ## Index
 
 * [Syntax](syntax.html)
-* [Getting Started](getting-started.html)
+* [Structure](structure.html)
+* [Getting Started (C++)](getting-started-cpp.html)
