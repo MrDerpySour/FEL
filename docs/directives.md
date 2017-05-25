@@ -61,7 +61,7 @@ Example:
 
 This will set the save/load filepath for the [variables](variables.html).  
 This will only take effect if the `variables` module is loaded.  
-Vars will be saved/loaded in [fvt](fvt.html) format.
+Vars will be saved/loaded in [fvt](fel-misc.html) format.
 
 Example:
 ```
