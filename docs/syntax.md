@@ -1,6 +1,7 @@
 # Syntax
 -----
 ### Core
+
 | Syntax | Meaning     | Description                         | Parameters          |
 |:-------|:------------|:------------------------------------|:--------------------|
 | FLJ    | Flag jump   | Jumps to event_id if flag_id is set | [flag_id\|event_id] |
@@ -17,6 +18,7 @@
 ## Modules
 
 ### Variables
+
 |Syntax|Meaning|Description|Parameters|
 | --- | --- | --- | --- |
 | REG | Register | Registers a variable | [name\|type\|value] |
