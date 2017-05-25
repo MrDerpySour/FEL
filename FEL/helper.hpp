@@ -45,7 +45,7 @@ FEL_API bool fileExists(const std::string& file_path);
  * @return Whether or not the operation was successful
  */
 FEL_API bool createFile(const std::string& file_path,
-                               const std::string& contents);
+                        const std::string& contents);
 
 /**
  * Returns a random integer between the specified range
