@@ -47,7 +47,7 @@ int main() {
   std::cin.ignore(); // So our program doesn't close immediately
 }
 ```
-...NOTE: the file can be any extension, for the sake of clarity, we'll be using .fel for this tutorial
+⋅⋅⋅NOTE: the file can be any extension, for the sake of clarity, we'll be using .fel for this tutorial
 
 Now that we have loaded our file we can start executing events.
 Executing events is done with the `execute` function, NOT with the `executeEvent` function.
