@@ -15,35 +15,23 @@ void Interpreter::compile(Event* evnt,
   if (file.fail())
     return;
 
-  if (event_id == -1) { // Interpret all
-    std::string line = "";
-    while (std::getline(file, line)) {
-      if (line.size() >= 2) {
-        if (line[0] != '/' && line[1] != '/' && line[0] != '#') {
-          inject(evnt, line, nullptr);
-          return;
-        }
-      }
-    }
-  } else { // Get and compile specific event
-    std::string line = "";
-    while (std::getline(file, line)) {
-      if (line.size() >= 2) {
-        if (line[0] != '/' && line[1] != '/' && line[0] != '#') {
-          int i = line.find_first_of('>');
+  std::string line = "";
+  while (std::getline(file, line)) {
+    if (line.size() >= 2) {
+      if (line[0] != '/' && line[1] != '/' && line[0] != '#') {
+        int i = line.find_first_of('>');
 
-          if (i == -1) {
-            try {
-              int id = std::stoi(line.substr(0, i));
+        if (i == -1) {
+          try {
+            int id = std::stoi(line.substr(0, i));
 
-              if (id == event_id) {
-                inject(evnt, line, nullptr);
-              }
-            } catch (...) {
-              printf("Error: ID couldn't be found\n");
-              evnt->instructions = { Instruction(kFelError, line) };
-              return;
+            if (id == event_id) {
+              inject(evnt, line, nullptr);
             }
+          } catch (...) {
+            printf("Error: ID couldn't be found\n");
+            evnt->instructions = { Instruction(kFelError, line) };
+            return;
           }
         }
       }
