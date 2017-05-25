@@ -1,10 +1,8 @@
 <h3 align="center"><a href="index.html">Back</a></h3>
 
-# FEL | Getting Started
+# FEL | Getting Started (C++)
 -----
 
-## Setup | C++
------
 First of all, you build the source files as a .dll file.  
 Knowledge on how to build it, link it, etc, is assumed.
 I use Visual Studio.
@@ -72,3 +70,5 @@ int main() {
 }
 ```
 And that's the basics of loading and executing events in FEL.
+
+<h3 align="center"><a href="index.html">Back</a></h3>
