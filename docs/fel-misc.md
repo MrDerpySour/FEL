@@ -1,3 +1,5 @@
+<h3 align="center"><a href="index.html">Index</a></h3>
+
 # Miscellaneous
 -----
 
@@ -32,7 +34,7 @@ While normal variables are parsed at runtime, `id` will be parsed at compile-tim
 ## Math
 Parameters which take a numeral value will support math.  
 +, -, *, /, % are the supported operations.  
-It keeps in mind the correct order and will also give math in between parentheses higher priority.
+It keeps in mind the correct order and will also give math in between parentheses higher priority.  
 
 Example:
 ```
@@ -41,3 +43,15 @@ Example:
 
 25>PRI[Hello!]|
 ```
+
+## FEL Variable Table
+FEL Variable Table or fvt is the format variables are saved in.  
+The format is pretty simple, it starts with a `>` followed by the name, type and value with `|` in between and finally: a `<`.  
+
+Example:
+```
+>hello|string|Hello, world!|
+>number|float|3.1415|
+```
+
+<h3 align="center"><a href="index.html">Index</a></h3>
