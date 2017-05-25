@@ -1,3 +1,5 @@
+<h3 align="center" link="index.html">Back</h3>
+
 # Syntax
 -----
 ## Core
