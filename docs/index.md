@@ -16,6 +16,8 @@ Flag Event Language or FEL is a simple scripting language inspired by Cave Story
 
 ## C++
 * [Loading & Executing](loading-executing.html)
+* [Context](context.html)
+* [Custom Commands](custom-commands.html)
 
 ## Misc
 * [Special Thanks](special-thanks.html)
