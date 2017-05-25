@@ -125,9 +125,7 @@ void Interpreter::inject(Event* evnt, const std::string& code, Context* context)
     int i = line.find_first_of('>');
     
     try {
-      if (i != -1) {
-        evnt->id = std::stoi(line.substr(0, i));
-      }
+      evnt->id = std::stoi(line.substr(0, i));
 
       // If event is empty:
       // n>|
