@@ -23,11 +23,13 @@ Flag Event Language or FEL is a simple scripting language inspired by Cave Story
 ## Misc
 * [Special Thanks](special-thanks.html)
 * [Contact](contact.html)
+
 -----
 ### Notepad++ Themes
 
 Here are some FEL themes for Notepad++  
-* [Default](FEL-light.xml)  
-* [Black board](FEL.xml)  
+* <a href="FEL-light.xml" target="_blank">Default</a>  
+* <a href="FEL.xml" target="_blank">Black board</a>
+
 -----
 FEL is made by Tom Mol
