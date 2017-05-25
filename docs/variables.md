@@ -42,5 +42,5 @@ Example:
 1>REG[type|string|string]-REG[1|%type%|hello]-SET[type|float]-REG[2|%type%|2.5]|
 ```
 
-<h3 align="center"><a href="fvt.html">Next</a></h3>
+<h3 align="center"><a href="fel-misc.html">Next</a></h3>
 <h3 align="center"><a href="index.html">Index</a></h3>
