@@ -9,7 +9,7 @@
 * [Modules](modules.html)
 * [Flags](flags.html)
 * [Variables](variables.html)
-* [Misc](fel-misc.html)
+* [Miscellaneous](fel-misc.html)
 
 ## C++
 * [Getting Started (C++)](getting-started-cpp.html)
