@@ -2,7 +2,11 @@
 
 #include "../../manager.hpp"
 
-void fel::modules::variables::FelRegisterVar::execute(const std::string& parameters, FlagList* list, Context* context) {
+namespace fel {
+namespace modules {
+namespace variables {
+
+void FelRegisterVar::execute(const std::string& parameters, FlagList* list, Context* context) {
   std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
   Var var;
 
@@ -54,37 +58,36 @@ void fel::modules::variables::FelRegisterVar::execute(const std::string& paramet
   memory_->add(var);
 }
 
-void fel::modules::variables::FelSetVar::execute(const std::string& parameters, FlagList* list, Context* context) {
-  {
+void FelSetVar::execute(const std::string& parameters, FlagList* list, Context* context) {
+  std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
+  if (memory_->variables_.find(tmp[0]) != memory_->variables_.end()) {
+    Var var = memory_->get(tmp[0]);
+    switch (var.type) {
+      case FelVarType::kString: {
+        memory_->variables_[tmp[0]].string_value = tmp[1];
+        break; }
 
-    std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
-    if (memory_->variables_.find(tmp[0]) != memory_->variables_.end()) {
-      Var var = memory_->get(tmp[0]);
-      switch (var.type) {
-        case FelVarType::kString: {
-          memory_->variables_[tmp[0]].string_value = tmp[1];
-          break; }
-
-        case FelVarType::kFloat: {
-          memory_->variables_[tmp[0]].float_value = static_cast<float>(helper::parseMathString(tmp[1]));
-          break; }
-      }
-    } else {
-      printf("Error: variable not found\n\tVariable '%s'\n", tmp[0].c_str());
+      case FelVarType::kFloat: {
+        memory_->variables_[tmp[0]].float_value = static_cast<float>(helper::parseMathString(tmp[1]));
+        break; }
     }
+  } else {
+    printf("Error: variable not found\n\tVariable '%s'\n", tmp[0].c_str());
   }
 }
 
-void fel::modules::variables::FelCompareVar::execute(const std::string& parameters, FlagList* list, Context* context) {
+void FelCompareVar::execute(const std::string& parameters, FlagList* list, Context* context) {
   std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
 
-  if (tmp.size() != 3) {
-    printf("Error: invalid argument count (3 expected)");
+  if (!(tmp.size() == 3 || tmp.size() == 4)) {
+    printf("Error: invalid argument count (3/4 expected)");
   }
 
   if (tmp[0] == tmp[1]) {
     try {
       int evnt_id = static_cast<int>(helper::parseMathString(context->parseVariableString(tmp[2])));
+
+      context->scope = (tmp.size() == 3) ? "" : tmp[3];
 
       parent_->checkInfiniteLoop(context->scope, evnt_id);
       parent_->executeEvent(evnt_id);
@@ -95,3 +98,7 @@ void fel::modules::variables::FelCompareVar::execute(const std::string& paramete
     }
   }
 }
+
+} // namespace fel
+} // namespace modules
+} // namespace variables

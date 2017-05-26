@@ -142,12 +142,19 @@ bool Manager::executeBytecode(const int& event_executed) {
       case kFlj: {
         std::vector<std::string> tmp = helper::tokenize(context_.current_instructions[context_.instruction_index].parameters, '|');
 
+        if (!(tmp.size() == 2 || tmp.size() == 3)) {
+          printf("Error: invalid argument count (2/3 expected)\n");
+          return false;
+        }
+
         try {
           int flag_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(tmp[0])));
           int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(tmp[1])));
 
           if (flags_.at_id(flag_id) != nullptr) {
             if (flags_.at_id(flag_id)->is_set()) {
+              context_.scope = (tmp.size() == 2) ? "" : tmp[2];
+
               checkInfiniteLoop(context_.scope, evnt_id);
               return this->executeEvent(evnt_id);
               noLoop();
@@ -241,40 +248,27 @@ bool Manager::executeBytecode(const int& event_executed) {
         return true; }
 
       case kExe: {
-        try {
-          std::vector<std::string> tmp = helper::tokenize(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters), '|');
-          
-          if (tmp.size() == 1) {
-            int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters)));
+        std::vector<std::string> tmp = helper::tokenize(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters), '|');
 
-            checkInfiniteLoop("", evnt_id);
+        if (!(tmp.size() == 1 || tmp.size() == 2)) {
+          printf("Error: invalid argument count (1/2 expected)\n");
+          return false;
+        }
 
-            saveState();
+        try {          
+         int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters)));
 
-            context_.scope = "";
-            executeEvent(evnt_id);
+         context_.scope = (tmp.size() == 2) ? "" : tmp[2];
 
-            restoreState();
+         checkInfiniteLoop(context_.scope, evnt_id);
 
-            noLoop();
-          } else if (tmp.size() == 2) {
-            int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(tmp[0])));
+         saveState();
 
-            checkInfiniteLoop(context_.scope, evnt_id);
+         executeEvent(evnt_id);
 
-            saveState();
+         restoreState();
 
-            context_.scope = tmp[1];
-            executeEvent(evnt_id);
-
-            restoreState();
-
-            noLoop();
-
-          } else {
-            printf("Error: invalid argument count (1/2 expected)\n");
-            return false;
-          }
+         noLoop();
 
         } catch (...) {
           printf("Error: invalid argument type (int expected)\n");
