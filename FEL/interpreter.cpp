@@ -8,6 +8,67 @@ static bool multi_line_comment = false;
 
 namespace fel {
 
+void Interpreter::compile(Event* evnt,
+                          const std::string& file_path,
+                          const std::string& group_name,
+                          const int& evnt_id,
+                          Context* context) {
+  std::fstream file(file_path);
+  std::string line = "";
+  std::string current_group = "";
+
+  if (file.fail()) {
+    printf("Error: something went wrong loading file\n\tPath: '%s'\n", file_path.c_str());
+    return;
+  }
+
+  while (std::getline(file, line)) {
+    if (line.size() < 2)
+      continue;
+
+    if (line[0] == '/' && line[1] == '/')
+      continue;
+
+    // Parse group
+    if (line[0] == '#') {
+      int hash_seperator = line.find_first_of(' ');
+
+      if (hash_seperator == -1) {
+        hash_seperator = line.size();
+      }
+
+      std::string cmd = line.substr(1, hash_seperator - 1);
+
+      if (cmd == "group") {
+        current_group = line.substr(hash_seperator + 2, line.length() - hash_seperator - 3);
+        continue;
+      }
+
+      if (cmd == "endgroup") {
+        current_group = "";
+        continue;
+      }
+    }
+
+    // Parse event id
+    int i = line.find_first_of('>');
+
+    if (i != -1) {
+      int id = std::stoi(line.substr(0, i));
+
+      if (current_group == group_name && evnt_id == id) {
+        std::string dummy = "";
+        Interpreter::inject(evnt, line, dummy, context);
+        return;
+      }
+    } else {
+      continue;
+    }
+  }
+
+  printf("Error: no event found with ID '%d'%s\n", evnt_id, ((group_name == "") ? "" : (" in scope " + group_name).c_str()));
+}
+
 Event Interpreter::inject(const std::string& code, std::string& group_name, Context* context) {
   Event evnt;
   inject(&evnt, code, group_name, context);
@@ -91,11 +152,13 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& grou
       // Groups
       if (cmd == "group") {
         group_name = line.substr(hash_seperator + 2, line.length() - hash_seperator - 3);
+        context->scope = group_name;
         return;
       }
 
       if (cmd == "endgroup") {
         group_name = "";
+        context->scope = group_name;
         return;
       }
 
@@ -214,10 +277,11 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& grou
   for (size_t i = 0; i < split_cmds.size(); ++i) {
     Instruction instruction;
 
-    // Replace %id% with the actual id
+    // Replace %id% and %scope% with the actual variables
     // We replace the split_cmds instead of the parameters because it may cause problems with c_str or char buffers
     if (!split_cmds[i].second.empty()) {
       helper::str_replace_all(split_cmds[i].second, "%id%", std::to_string(evnt->id));
+      helper::str_replace_all(split_cmds[i].second, "%scope%", context->scope);
       
       // Restore character codes
       helper::str_replace_all(split_cmds[i].second, "\\n", "\n");

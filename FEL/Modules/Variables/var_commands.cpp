@@ -21,12 +21,17 @@ void fel::modules::variables::FelRegisterVar::execute(const std::string& paramet
     return;
   }
 
-  if (tmp[0] != "id")
-    var.name = tmp[0];
-  else {
+  if (tmp[0] == "id") {
     printf("Error: 'id' is a preserved name\n");
     return;
   }
+
+  if (tmp[0] == "scope") {
+    printf("Error: 'scope' is a preserved name\n");
+    return;
+  }
+
+  var.name = tmp[0];
 
   if (tmp[1] == "float")
     var.type = FelVarType::kFloat;
@@ -83,6 +88,7 @@ void fel::modules::variables::FelCompareVar::execute(const std::string& paramete
 
       parent_->checkInfiniteLoop(evnt_id);
       parent_->executeEvent(evnt_id);
+      parent_->noLoop();
     } catch (...) {
       printf("Error: invalid argument type (int expected)\n");
       return;

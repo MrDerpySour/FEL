@@ -91,6 +91,12 @@ class Manager {
   FEL_API bool checkInfiniteLoop(const int& evnt_id, const bool& add_id = true);
 
   /**
+   * Removes the id from the infite loop checker
+   * @param evnt_id The ID to remove
+   */
+  FEL_API void noLoop();
+
+  /**
    * Saves the current instructions
    */
   FEL_API void saveState();

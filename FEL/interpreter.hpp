@@ -13,7 +13,11 @@ namespace fel {
 class Interpreter {
  public:
   // Will be rewritten
-  FEL_API static void compile(Event* evnt, const std::string& file_path, const int& evnt_id) {}
+  FEL_API static void compile(Event* evnt,
+                              const std::string& file_path,
+                              const std::string& group_name,
+                              const int& evnt_id,
+                              Context* context);
 
   /**
    * Creates an event from a string of code

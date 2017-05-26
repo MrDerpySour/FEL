@@ -150,6 +150,7 @@ bool Manager::executeBytecode(const int& event_executed) {
             if (flags_.at_id(flag_id)->is_set()) {
               checkInfiniteLoop(evnt_id);
               return this->executeEvent(evnt_id);
+              noLoop();
             }
           }
         } catch (...) {
@@ -251,6 +252,8 @@ bool Manager::executeBytecode(const int& event_executed) {
 
           restoreState();
 
+          noLoop();
+
         } catch (...) {
           printf("Error: invalid argument type (int expected)\n");
           return false;
@@ -268,7 +271,7 @@ bool Manager::executeBytecode(const int& event_executed) {
           }
 
           Event evnt;
-          Interpreter::compile(&evnt, file_path_, bld_event_id);
+          Interpreter::compile(&evnt, file_path_, context_.scope, bld_event_id, &context_);
 
           if (build_it == events_[context_.scope].end()) {
             events_[context_.scope].insert(std::make_pair(bld_event_id, evnt));
@@ -302,9 +305,9 @@ bool Manager::executeBytecode(const int& event_executed) {
           return false;
         }
 
-        saveState();
-
         checkInfiniteLoop(evnt_id);
+
+        saveState();
 
         for (int i = 0; i < count; ++i) {
           if (!checkFatalError())
@@ -312,9 +315,9 @@ bool Manager::executeBytecode(const int& event_executed) {
           else
             return false;
         }
-
         restoreState();
 
+        noLoop();
         break; }
 
       case kFelFunc: {
@@ -584,6 +587,10 @@ void Manager::loadModules() {
 
     already_loaded = false;
   }
+}
+
+FEL_API void Manager::noLoop() {
+  infinite_loop_.pop_back();
 }
 
 void Manager::saveState() {
