@@ -36,7 +36,7 @@ class Manager {
    * @param evnt_id The ID of the event
    * @return Whether the operation executed without any errors or not
    */
-  FEL_API bool execute(const int& evnt_id, const std::string& group_name);
+  FEL_API bool execute(const int& evnt_id, const std::string& scope = "");
 
   /**
    * Execute a subsidairy event, meant to be used by custom commands
@@ -84,12 +84,12 @@ class Manager {
 
   /**
    * Checks if you're inside an infinite loop
-   * @param group_name The name of the group the event is in
+   * @param scope The name of the group the event is in
    * @param evnt_id The ID of the event you're going to call
    * @param add_id Whether or not to add the ID to the infinite loop's watch list
    * @return Whether or not you're executing an infinite loop or not
    */
-  FEL_API bool checkInfiniteLoop(const std::string& group_name, const int& evnt_id, const bool& add_id = true);
+  FEL_API bool checkInfiniteLoop(const std::string& scope, const int& evnt_id, const bool& add_id = true);
 
   /**
    * Removes the id from the infite loop checker

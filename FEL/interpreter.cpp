@@ -10,7 +10,7 @@ namespace fel {
 
 void Interpreter::compile(Event* evnt,
                           const std::string& file_path,
-                          const std::string& group_name,
+                          const std::string& scope,
                           const int& evnt_id,
                           Context* context) {
   std::fstream file(file_path);
@@ -56,7 +56,7 @@ void Interpreter::compile(Event* evnt,
     if (i != -1) {
       int id = std::stoi(line.substr(0, i));
 
-      if (current_group == group_name && evnt_id == id) {
+      if (current_group == scope && evnt_id == id) {
         std::string dummy = "";
         Interpreter::inject(evnt, line, dummy, context);
         return;
@@ -66,16 +66,16 @@ void Interpreter::compile(Event* evnt,
     }
   }
 
-  printf("Error: no event found with ID '%d'%s\n", evnt_id, ((group_name == "") ? "" : (" in scope " + group_name).c_str()));
+  printf("Error: no event found with ID '%d'%s\n", evnt_id, ((scope == "") ? "" : (" in scope " + scope).c_str()));
 }
 
-Event Interpreter::inject(const std::string& code, std::string& group_name, Context* context) {
+Event Interpreter::inject(const std::string& code, std::string& scope, Context* context) {
   Event evnt;
-  inject(&evnt, code, group_name, context);
+  inject(&evnt, code, scope, context);
   return evnt;
 }
 
-void Interpreter::inject(Event* evnt, const std::string& code, std::string& group_name, Context* context) {
+void Interpreter::inject(Event* evnt, const std::string& code, std::string& scope, Context* context) {
   std::string line = code;
 
   if (line.length() >= 2) {
@@ -151,14 +151,14 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& grou
 
       // Groups
       if (cmd == "group") {
-        group_name = line.substr(hash_seperator + 2, line.length() - hash_seperator - 3);
-        context->scope = group_name;
+        scope = line.substr(hash_seperator + 2, line.length() - hash_seperator - 3);
+        context->scope = scope;
         return;
       }
 
       if (cmd == "endgroup") {
-        group_name = "";
-        context->scope = group_name;
+        scope = "";
+        context->scope = scope;
         return;
       }
 

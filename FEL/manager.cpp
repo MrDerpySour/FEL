@@ -26,16 +26,16 @@ void Manager::load(const std::string& file_path) {
   if (file.fail())
     return;
     
-  std::string group_name = "";
+  std::string scope = "";
   std::string line = "";
   while (std::getline(file, line)) {
     if (line == "#debug") {
       context_.debug_mode_ = true;
     } else {
-      Event evnt = Interpreter::inject(line, group_name, &context_);
+      Event evnt = Interpreter::inject(line, scope, &context_);
       if (evnt.id != -1) {
-        if (events_[group_name].find(evnt.id) == events_[group_name].end())
-          events_[group_name].insert(std::make_pair(evnt.id, evnt));
+        if (events_[scope].find(evnt.id) == events_[scope].end())
+          events_[scope].insert(std::make_pair(evnt.id, evnt));
         else {
           printf("Error: event with id already exists\n\tID: %d\n", evnt.id);
           return;
@@ -62,8 +62,8 @@ void Manager::load(const std::string& file_path) {
   }
 }
 
-bool Manager::execute(const int& event_id, const std::string& group_name) {
-  context_.scope = group_name;
+bool Manager::execute(const int& event_id, const std::string& scope) {
+  context_.scope = scope;
 
   bool result = executeEvent(event_id);
 
@@ -527,7 +527,7 @@ void Manager::loadLinkedFiles() {
   std::vector<std::string> link_directives;
   link_directives.push_back(file_path_);
 
-  std::string group_name = "";
+  std::string scope = "";
 
   // For opening the files
   std::fstream file;
@@ -552,10 +552,10 @@ void Manager::loadLinkedFiles() {
       }
 
       while (std::getline(file, line)) {
-        Event evnt = Interpreter::inject(line, group_name, &context_);
+        Event evnt = Interpreter::inject(line, scope, &context_);
         if (evnt.id != -1) {
-          if (events_[group_name].find(evnt.id) == events_[group_name].end())
-            events_[group_name].insert(std::make_pair(evnt.id, evnt));
+          if (events_[scope].find(evnt.id) == events_[scope].end())
+            events_[scope].insert(std::make_pair(evnt.id, evnt));
           else {
             printf("Error: event with id already exists\n\tID: %d\n", evnt.id);
             return;
@@ -632,9 +632,9 @@ void Manager::restoreState() {
   }
 }
 
-bool Manager::checkInfiniteLoop(const std::string& group_name, const int& evnt_id, const bool& add_id) {
+bool Manager::checkInfiniteLoop(const std::string& scope, const int& evnt_id, const bool& add_id) {
   // Catch infinite loop error
-  if (std::find(infinite_loop_.begin(), infinite_loop_.end(), std::make_pair(group_name, evnt_id)) != infinite_loop_.end()) {
+  if (std::find(infinite_loop_.begin(), infinite_loop_.end(), std::make_pair(scope, evnt_id)) != infinite_loop_.end()) {
 
     fatal_error_ = true;
     msg_ = "Error: infinite loop detected\n";
@@ -644,7 +644,7 @@ bool Manager::checkInfiniteLoop(const std::string& group_name, const int& evnt_i
   }
 
   if (add_id)
-    infinite_loop_.push_back(std::make_pair(group_name, evnt_id));
+    infinite_loop_.push_back(std::make_pair(scope, evnt_id));
 
   return fatal_error_;
 }
