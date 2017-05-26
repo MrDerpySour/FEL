@@ -1,9 +1,9 @@
 <h3 align="center"><a href="index.html">Index</a></h3>
 
-NOTE: The `scope` parameter is always optional. If it isn't set, global scope is assumed
-
 # Syntax
 -----
+NOTE: The `scope` parameter is always optional. If it isn't set, global scope is assumed
+
 ## Core
 
 | Syntax | Meaning     | Description                             | Parameters                       |
