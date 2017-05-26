@@ -12,12 +12,12 @@ NOTE: The `scope` parameter is always optional. If it isn't set, global scope is
 | FLS    | Flag set    | Sets flag `flag_id`                     | [ `flag_id`]                     |
 | FLU    | Flag unset  | Unsets flag `flag_id`                   | [`flag_id`]                      |
 | FLT    | Flag toggle | Toggles flag `flag_id`                  | [`flag_id`]                      |
-| PRI    | Print       | Prints a message to the console         | [`msg`]                          |
+| PRI    | Print       | Prints a message to the console         | [`message`]                      |
 | ESC    | Escape      | Escapes from an event                   | None                             |
 | EXE    | Execute     | Executes event `event_id`               | [`event_id`\|`scope`]            |
-| BLD    | Build       | Builds/rebuilds an event                | [event_id]                       |
-| SYS    | System      | Executes a system command               | [command]                        |
-| RPT    | Repeat      | Repeats an event                        | [event_id\|count]                |
+| BLD    | Build       | Builds/rebuilds event `event_id`        | [`event_id`]                     |
+| SYS    | System      | Executes a system command               | [`command`]                      |
+| RPT    | Repeat      | Repeats an event                        | [`event_id`\|`count`\|`scope`]   |
 
 ## Modules
 -----
