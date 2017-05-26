@@ -86,7 +86,7 @@ void fel::modules::variables::FelCompareVar::execute(const std::string& paramete
     try {
       int evnt_id = static_cast<int>(helper::parseMathString(context->parseVariableString(tmp[2])));
 
-      parent_->checkInfiniteLoop(evnt_id);
+      parent_->checkInfiniteLoop(context->scope, evnt_id);
       parent_->executeEvent(evnt_id);
       parent_->noLoop();
     } catch (...) {

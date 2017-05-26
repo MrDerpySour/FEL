@@ -148,7 +148,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
           if (flags_.at_id(flag_id) != nullptr) {
             if (flags_.at_id(flag_id)->is_set()) {
-              checkInfiniteLoop(evnt_id);
+              checkInfiniteLoop(context_.scope, evnt_id);
               return this->executeEvent(evnt_id);
               noLoop();
             }
@@ -242,17 +242,39 @@ bool Manager::executeBytecode(const int& event_executed) {
 
       case kExe: {
         try {
-          int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters)));
+          std::vector<std::string> tmp = helper::tokenize(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters), '|');
+          
+          if (tmp.size() == 1) {
+            int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters)));
 
-          checkInfiniteLoop(evnt_id);
+            checkInfiniteLoop("", evnt_id);
 
-          saveState();
+            saveState();
 
-          executeEvent(evnt_id);
+            context_.scope = "";
+            executeEvent(evnt_id);
 
-          restoreState();
+            restoreState();
 
-          noLoop();
+            noLoop();
+          } else if (tmp.size() == 2) {
+            int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(tmp[0])));
+
+            checkInfiniteLoop(context_.scope, evnt_id);
+
+            saveState();
+
+            context_.scope = tmp[1];
+            executeEvent(evnt_id);
+
+            restoreState();
+
+            noLoop();
+
+          } else {
+            printf("Error: invalid argument count (1/2 expected)\n");
+            return false;
+          }
 
         } catch (...) {
           printf("Error: invalid argument type (int expected)\n");
@@ -305,7 +327,7 @@ bool Manager::executeBytecode(const int& event_executed) {
           return false;
         }
 
-        checkInfiniteLoop(evnt_id);
+        checkInfiniteLoop(context_.scope, evnt_id);
 
         saveState();
 
@@ -589,8 +611,9 @@ void Manager::loadModules() {
   }
 }
 
-FEL_API void Manager::noLoop() {
-  infinite_loop_.pop_back();
+void Manager::noLoop() {
+  if (!infinite_loop_.empty())
+    infinite_loop_.pop_back();
 }
 
 void Manager::saveState() {
@@ -612,9 +635,9 @@ void Manager::restoreState() {
   }
 }
 
-bool Manager::checkInfiniteLoop(const int& evnt_id, const bool& add_id) {
+bool Manager::checkInfiniteLoop(const std::string& group_name, const int& evnt_id, const bool& add_id) {
   // Catch infinite loop error
-  if (std::find(infinite_loop_.begin(), infinite_loop_.end(), evnt_id) != infinite_loop_.end()) {
+  if (std::find(infinite_loop_.begin(), infinite_loop_.end(), std::make_pair(group_name, evnt_id)) != infinite_loop_.end()) {
 
     fatal_error_ = true;
     msg_ = "Error: infinite loop detected\n";
@@ -624,7 +647,7 @@ bool Manager::checkInfiniteLoop(const int& evnt_id, const bool& add_id) {
   }
 
   if (add_id)
-    infinite_loop_.push_back(evnt_id);
+    infinite_loop_.push_back(std::make_pair(group_name, evnt_id));
 
   return fatal_error_;
 }

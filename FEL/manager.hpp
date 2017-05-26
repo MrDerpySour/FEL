@@ -84,11 +84,12 @@ class Manager {
 
   /**
    * Checks if you're inside an infinite loop
+   * @param group_name The name of the group the event is in
    * @param evnt_id The ID of the event you're going to call
    * @param add_id Whether or not to add the ID to the infinite loop's watch list
    * @return Whether or not you're executing an infinite loop or not
    */
-  FEL_API bool checkInfiniteLoop(const int& evnt_id, const bool& add_id = true);
+  FEL_API bool checkInfiniteLoop(const std::string& group_name, const int& evnt_id, const bool& add_id = true);
 
   /**
    * Removes the id from the infite loop checker
@@ -144,7 +145,7 @@ class Manager {
   std::stack<int> index_backups_;
 
   // Error detection
-  std::vector<int> infinite_loop_;
+  std::vector<std::pair<std::string, int>> infinite_loop_;
   std::string msg_ = "No error message available";
   bool fatal_error_ = false;
 };
