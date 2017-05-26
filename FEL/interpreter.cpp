@@ -15,7 +15,7 @@ void Interpreter::compile(Event* evnt,
                           Context* context) {
   std::fstream file(file_path);
   std::string line = "";
-  std::string current_group = "";
+  std::string current_scope = "";
 
   if (file.fail()) {
     printf("Error: something went wrong loading file\n\tPath: '%s'\n", file_path.c_str());
@@ -39,13 +39,13 @@ void Interpreter::compile(Event* evnt,
 
       std::string cmd = line.substr(1, hash_seperator - 1);
 
-      if (cmd == "group") {
-        current_group = line.substr(hash_seperator + 2, line.length() - hash_seperator - 3);
+      if (cmd == "scope") {
+        current_scope = line.substr(hash_seperator + 2, line.length() - hash_seperator - 3);
         continue;
       }
 
-      if (cmd == "endgroup") {
-        current_group = "";
+      if (cmd == "endscope") {
+        current_scope = "";
         continue;
       }
     }
@@ -56,7 +56,7 @@ void Interpreter::compile(Event* evnt,
     if (i != -1) {
       int id = std::stoi(line.substr(0, i));
 
-      if (current_group == scope && evnt_id == id) {
+      if (current_scope == scope && evnt_id == id) {
         std::string dummy = "";
         Interpreter::inject(evnt, line, dummy, context);
         return;
