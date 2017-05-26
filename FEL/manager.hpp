@@ -36,7 +36,7 @@ class Manager {
    * @param evnt_id The ID of the event
    * @return Whether the operation executed without any errors or not
    */
-  FEL_API bool execute(const int& evnt_id);
+  FEL_API bool execute(const int& evnt_id, const std::string& group_name);
 
   /**
    * Execute a subsidairy event, meant to be used by custom commands
@@ -125,7 +125,7 @@ class Manager {
     
  private:
   // General
-  std::unordered_map<int, Event> events_;
+  std::unordered_map<std::string, std::unordered_map<int, Event>> events_;
   std::unordered_map<std::string, CommandClass*> custom_commands_;
 
   std::string file_path_ = "";

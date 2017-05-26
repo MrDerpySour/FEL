@@ -72,6 +72,9 @@ friend class Interpreter;
   std::vector<Instruction> current_instructions;
   size_t instruction_index = 0;
 
+  // Scope
+  std::string scope = "";
+
  private:
   // Modules
   std::unique_ptr<modules::variables::VariablesManager> module_variables_manager_;

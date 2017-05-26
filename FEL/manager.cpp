@@ -26,15 +26,16 @@ void Manager::load(const std::string& file_path) {
   if (file.fail())
     return;
     
+  std::string group_name = "";
   std::string line = "";
   while (std::getline(file, line)) {
     if (line == "#debug") {
       context_.debug_mode_ = true;
     } else {
-      Event evnt = Interpreter::inject(line, &context_);
+      Event evnt = Interpreter::inject(line, group_name, &context_);
       if (evnt.id != -1) {
-        if (events_.find(evnt.id) == events_.end())
-          events_.insert(std::make_pair(evnt.id, evnt));
+        if (events_[group_name].find(evnt.id) == events_[group_name].end())
+          events_[group_name].insert(std::make_pair(evnt.id, evnt));
         else {
           printf("Error: event with id already exists\n\tID: %d\n", evnt.id);
           return;
@@ -61,7 +62,9 @@ void Manager::load(const std::string& file_path) {
   }
 }
 
-bool Manager::execute(const int& event_id) {
+bool Manager::execute(const int& event_id, const std::string& group_name) {
+  context_.scope = group_name;
+
   bool result = executeEvent(event_id);
 
   if (fatal_error_) {
@@ -73,19 +76,26 @@ bool Manager::execute(const int& event_id) {
 }
 
 bool Manager::executeEvent(const int& evnt_id) {
-  auto it = events_.find(evnt_id);
+  auto group_it = events_.find(context_.scope.c_str());
 
-  if (it == events_.end()) {
+  if (group_it == events_.end()) {
+    printf("Error: no group found with name '%s'\n", context_.scope.c_str());
+    return false;
+  }
+
+  auto evnt_it = group_it->second.find(evnt_id);
+
+  if (evnt_it == group_it->second.end()) {
     printf("Error: no event found with id '%d'\n", evnt_id);
     return false;
   }
 
-  context_.current_instructions = it->second.instructions;
+  context_.current_instructions = evnt_it->second.instructions;
 
   // Error catching
 
   if (context_.current_instructions[0].byte_code == kFelError) {
-    printf("Error: event '%d' didn't compile correctly\n", it->second.id);
+    printf("Error: event '%d' didn't compile correctly\n", evnt_it->second.id);
     return false;
   }
 
@@ -104,7 +114,7 @@ bool Manager::executeEvent(const int& evnt_id) {
     return false;
   }
 
-  return executeBytecode(it->second.id);
+  return executeBytecode(evnt_it->second.id);
 }
 
 bool Manager::executeBytecode(const int& event_executed) {
@@ -250,7 +260,7 @@ bool Manager::executeBytecode(const int& event_executed) {
       case kBld: {
         try {
           int bld_event_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters)));
-          auto build_it = events_.find(bld_event_id);
+          auto build_it = events_[context_.scope].find(bld_event_id);
 
           if (bld_event_id < 0) {
             printf("Error: invalid ID\n");
@@ -260,10 +270,10 @@ bool Manager::executeBytecode(const int& event_executed) {
           Event evnt;
           Interpreter::compile(&evnt, file_path_, bld_event_id);
 
-          if (build_it == events_.end()) {
-            events_.insert(std::make_pair(bld_event_id, evnt));
+          if (build_it == events_[context_.scope].end()) {
+            events_[context_.scope].insert(std::make_pair(bld_event_id, evnt));
           } else {
-            events_[bld_event_id] = evnt;
+            events_[context_.scope][bld_event_id] = evnt;
           }
         } catch (...) {
           printf("Error: invalid argument type (int expected)\n");
@@ -454,23 +464,21 @@ void Manager::printDebug() {
 
   printf("\n\n\nEvents:");
 
-  for (size_t i = 0; i < events_.size(); ++i) {
+  for (auto it = events_.begin(); it != events_.end(); ++it) {
+    for (size_t i = 0; i < it->second.size(); ++i) {
+      if (it->second[i].id != -1) {
+        printf("\n %s %d:\n", ((it->first == "") ? "" : ("'" + std::string(it->first) + "'").c_str()),  it->second[i].id);
 
-    // For some reason when I iterate through the events, an event with id -1 shows up
-    // .size() return 1 and trying to execute it gives an unidentified id error.
-    // Stepping through this I noticed the for loop executing twice but when i was set to 1 it wouldn't
-    if (events_[i].id != -1) {
-      printf("\n  %d:\n", events_[i].id);
-
-      for (size_t instr = 0; instr < events_[i].instructions.size(); ++instr) {
-        printf("\t%s\t[ %s ]\n", ByteCodeString[events_[i].instructions.at(instr).byte_code], 
-                                events_[i].instructions[instr].parameters.c_str());
+        for (size_t instr = 0; instr < it->second[i].instructions.size(); ++instr) {
+          printf("\t%s\t[ %s ]\n", ByteCodeString[it->second[i].instructions.at(instr).byte_code],
+                 it->second[i].instructions[instr].parameters.c_str());
+        }
       }
-    }
 
-    printf("\n");
+      printf("\n");
+    }
   }
-    
+
   printf("\n---\n\n");
 }
 
@@ -497,10 +505,12 @@ void Manager::loadLinkedFiles() {
   std::vector<std::string> link_directives;
   link_directives.push_back(file_path_);
 
+  std::string group_name = "";
+
   // For opening the files
   std::fstream file;
   std::string line;
-
+  
   bool already_linked = false;
   for (size_t i = 0; i < context_.link_directives_.size(); ++i) {
 
@@ -520,10 +530,10 @@ void Manager::loadLinkedFiles() {
       }
 
       while (std::getline(file, line)) {
-        Event evnt = Interpreter::inject(line, &context_);
+        Event evnt = Interpreter::inject(line, group_name, &context_);
         if (evnt.id != -1) {
-          if (events_.find(evnt.id) == events_.end())
-            events_.insert(std::make_pair(evnt.id, evnt));
+          if (events_[group_name].find(evnt.id) == events_[group_name].end())
+            events_[group_name].insert(std::make_pair(evnt.id, evnt));
           else {
             printf("Error: event with id already exists\n\tID: %d\n", evnt.id);
             return;
