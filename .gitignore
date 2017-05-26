@@ -90,8 +90,6 @@ ipch/
 *.sap
 
 # Visual Studio misc
-*.sln
-*.vcxproj
 *.filters
 *.user
 
