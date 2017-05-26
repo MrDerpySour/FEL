@@ -306,8 +306,9 @@ bool Manager::executeBytecode(const int& event_executed) {
 
       case kRpt: {
         std::vector<std::string> tmp = helper::tokenize(context_.current_instructions[context_.instruction_index].parameters, '|');
-        if (tmp.size() != 2) {
-          printf("Error: invalid argument count (2 expected)\n");
+
+        if (!(tmp.size() == 2 || tmp.size() == 3)) {
+          printf("Error: invalid argument count (2/3 expected)\n");
           return false;
         }
 
@@ -320,6 +321,8 @@ bool Manager::executeBytecode(const int& event_executed) {
           printf("Error: invalid argument type (int expected)\n");
           return false;
         }
+
+        context_.scope = ((tmp.size() == 2) ? "" : tmp[2]);
 
         checkInfiniteLoop(context_.scope, evnt_id);
 
