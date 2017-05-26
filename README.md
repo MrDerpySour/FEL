@@ -16,10 +16,6 @@ Here is a list of features that may or may not be implemented in the future:
 * Multiline events  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Instead of putting an end marker, there will be some kind of nextline marker.  
 
-* Event grouping  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grouping events together under a name, probably with a `#group "name"` and `#endgroup` directive.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maybe nest the current std::unordered_map into another std::unordered_map with std::string name as the key.  
-
 * Creating and importing user-made modules  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Implement a base class like `CommandClass` and register modules before loading files.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Then, at compile-time, resolve the module names and load them.
@@ -35,6 +31,14 @@ Here is a list of features that may or may not be implemented in the future:
 * Preprocessor definitions  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A new `#define` directive that will allow you to create preprocessor strings.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This will not require the `variables` module and will be parsed at compile-time, like the reserved variable `id`.  
+
+# DONE
+-----
+Here is a list of all the TODO things that I actually finished:
+
+* Event grouping  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Grouping events together under a name, probably with a `#group "name"` and `#endgroup` directive.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maybe nest the current std::unordered_map into another std::unordered_map with std::string name as the key.  
 
 ## Contact
 If you have any other suggestions or question, feel free to contact me.  
