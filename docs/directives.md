@@ -85,5 +85,15 @@ Example:
 [Scopes](scope.html) allow you to organize your events better and avoid ID conflicts.  
 To go back to the global scope, you can use `endscope`
 
+Example:
+```
+// Global scope
+#scope "another scope"
+// Scope "another scope"
+// Events
+#endscope
+// Global scope
+```
+
 <h3 align="center"><a href="modules.html">Next</a></h3>
 <h3 align="center"><a href="index.html">Index</a></h3>
