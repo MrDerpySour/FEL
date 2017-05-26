@@ -50,8 +50,21 @@ int main() {
   return 0;
 }
 ```
-   NOTE: use the `execute` function and NOT the `executeEvent` function. [See why.](custom-commands.html)
-  
+NOTE: use the `execute` function and NOT the `executeEvent` function. [See why.](custom-commands.html)
+
+To `execute` events that aren't in the global scope, simply use the second parameter to specify a scope.  
+
+```cpp
+#include <FEL/manager.hpp>
+
+int main() {
+  fel::Manager manager;
+  manager.load("Hello, world.fel");
+  manager.execute(1, "subscope");
+  return 0;
+}
+```
+
 These are the basics of loading and executing events.
 
 <h3 align="center"><a href="context.html">Next</a></h3>

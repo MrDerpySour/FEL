@@ -10,14 +10,16 @@ A directive statement is made by typing a `#` followed by the command.
 
 Here is a table of all directives.
 
-| Directive  | Description               | Parameters |
-|:-----------|:--------------------------|:-----------|
-| link       | Links another file        | "filepath" |
-| module     | Loads a module            | "name"     |
-| debug      | Prints debug info         | None       |
-| flags      | Sets flags filepath       | "filepath" |
-| vars       | Sets vars filepath        | "filepath" |
-| ignorecase | Disables case-sensitivity | None       |
+| Directive    | Description                 | Parameters |
+|:-------------|:----------------------------|:-----------|
+| `link`       | Links another file          | "filepath" |
+| `module`     | Loads a module              | "name"     |
+| `debug`      | Prints debug info           | None       |
+| `flags`      | Sets flags filepath         | "filepath" |
+| `vars`       | Sets vars filepath          | "filepath" |
+| `ignorecase` | Disables case-sensitivity   | None       |
+| `scope`      | Defines a scope             | "name"     |
+| `endscope`   | Returns to the global scope | None       |
 
 ### Link
 
@@ -76,6 +78,21 @@ Someone complaint that it was annoying to keep holding shift.
 Example:
 ```
 #ignorecase
+```
+
+### Scopes
+
+[Scopes](scope.html) allow you to organize your events better and avoid ID conflicts.  
+To go back to the global scope, you can use `endscope`
+
+Example:
+```
+// Global scope
+#scope "another scope"
+// Scope "another scope"
+// Events
+#endscope
+// Global scope
 ```
 
 <h3 align="center"><a href="modules.html">Next</a></h3>
