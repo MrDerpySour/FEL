@@ -19,9 +19,12 @@ comment
   NOTE: make sure there is no whitespace before or after the comment
   
 ## Reserved variables
-There is only 1 reserved variable, `id`.
-ID is a variable automatically converted to the event's id.  
-You do NOT need to include the `variables` [module](modules.html) for this to work.
+There are only 2 reserved variables, `id` and `scope`.
+`id` is automatically converted to the event's id.  
+`scope` is automatically converted to the event's scope.  
+
+Reserved variables are accessed the same way as other variables, with 2 `%` on each side.  
+You do not need to include the `variables` [module](modules.html) for this to work.
 
 Example:
 ```
