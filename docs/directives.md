@@ -10,14 +10,16 @@ A directive statement is made by typing a `#` followed by the command.
 
 Here is a table of all directives.
 
-| Directive  | Description               | Parameters |
-|:-----------|:--------------------------|:-----------|
-| link       | Links another file        | "filepath" |
-| module     | Loads a module            | "name"     |
-| debug      | Prints debug info         | None       |
-| flags      | Sets flags filepath       | "filepath" |
-| vars       | Sets vars filepath        | "filepath" |
-| ignorecase | Disables case-sensitivity | None       |
+| Directive    | Description                 | Parameters |
+|:-------------|:----------------------------|:-----------|
+| `link`       | Links another file          | "filepath" |
+| `module`     | Loads a module              | "name"     |
+| `debug`      | Prints debug info           | None       |
+| `flags`      | Sets flags filepath         | "filepath" |
+| `vars`       | Sets vars filepath          | "filepath" |
+| `ignorecase` | Disables case-sensitivity   | None       |
+| `scope`      | Defines a scope             | "name"     |
+| `endscope`   | Returns to the global scope | None       |
 
 ### Link
 
@@ -77,6 +79,11 @@ Example:
 ```
 #ignorecase
 ```
+
+### Scopes
+
+[Scopes](scope.html) allow you to organize your events better and avoid ID conflicts.  
+To go back to the global scope, you can use `endscope`
 
 <h3 align="center"><a href="modules.html">Next</a></h3>
 <h3 align="center"><a href="index.html">Index</a></h3>
