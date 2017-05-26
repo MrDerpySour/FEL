@@ -1,4 +1,5 @@
 # FEL
+[![Build status](https://ci.appveyor.com/api/projects/status/6ao9lo2d8i89a2tv?svg=true)](https://ci.appveyor.com/project/Lunatoid/fel)
 -----
 Flag Event Language or FEL is a simple scripting language inspired by Cave Story's [TSC Language](http://www.cavestory.org/guides/basicmodding/guide/tsc.html) but aims to deliver a more customizable, flexible and easier scripting language.  
 
