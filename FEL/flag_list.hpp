@@ -59,15 +59,23 @@ class FlagList {
 
   /**
    * @param index The index of the Flag
-   * @return The Flag at the given index
+   * @return The Flag at the given index, if the flag doesn't exist it will return nullptr
+   */
+  FEL_API Flag* at(const size_t& index) const {
+    return (index < data_.size()) ? data_[index] : nullptr;
+  }
+
+  /**
+   * @param index The index of the Flag
+   * @return The Flag at the given index, if the flag doesn't exist it will return nullptr
    */
   FEL_API Flag* at(const int& index) const {
     if (index < 0)
       return nullptr;
 
-    return ((unsigned)index < data_.size()) ? data_[index] : nullptr;
+    return at(static_cast<size_t>(index));
   }
-
+  
   /* Operators */
 
   FEL_API Flag* operator[](const int& index) const& noexcept {

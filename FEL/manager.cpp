@@ -487,7 +487,7 @@ void Manager::printDebug() {
   printf("\n\n\nEvents:");
 
   for (auto it = events_.begin(); it != events_.end(); ++it) {
-    for (int i = 0; i < it->second.size(); ++i) {
+    for (int i = 0; i < static_cast<int>(it->second.size()); ++i) {
       if (it->second[i].id != -1) {
         printf("\n %s %d:\n", ((it->first == "") ? "" : ("'" + std::string(it->first) + "'").c_str()),  it->second[i].id);
 

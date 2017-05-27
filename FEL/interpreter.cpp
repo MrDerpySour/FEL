@@ -53,7 +53,7 @@ void Interpreter::compile(Event* evnt,
     // Parse event id
     size_t i = line.find_first_of('>');
 
-    if (i != -1) {
+    if (i != std::string::npos) {
       int id = std::stoi(line.substr(0, i));
 
       if (current_scope == scope && evnt_id == id) {
@@ -166,10 +166,10 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
       printf("Error: unknown link directive\n\tDirective \"%s\"\n", cmd.c_str());
     }
 
-    int i = line.find_first_of('>');
+    size_t i = line.find_first_of('>');
     
     try {
-      if (i != -1) {
+      if (i != std::string::npos) {
         evnt->id = std::stoi(line.substr(0, i));
       }
 
