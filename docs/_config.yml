@@ -1,4 +1,4 @@
-highlighter: rogue
+highlighter: rouge
 theme: jekyll-theme-cayman
 title: "FEL | Docs"
 description: The documentation of Flag Event Language
