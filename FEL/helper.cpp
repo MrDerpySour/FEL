@@ -110,7 +110,7 @@ double term(std::istringstream* parser) {
     } else if (c == '/') {
       result /= factor(parser);
     } else if (c == '%') {
-      result = fmod(result, factor(parser));
+      result = std::fmod(result, factor(parser));
     }
   }
 

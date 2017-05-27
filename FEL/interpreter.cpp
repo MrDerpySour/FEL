@@ -194,8 +194,6 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
     return;
   }
 
-  size_t start_pos = std::to_string(evnt->id).size();
-  
   // Check if end is defined
   if (line.back() != '|') {
     printf("Error: no end marker found\n");
@@ -314,7 +312,7 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
 
       for (int j = kFelBegin; j <= kFelEnd; ++j) {
         for (size_t u = 0; u < cmd.size(); ++u) {
-          cmd[u] = toupper(cmd[u]);
+          cmd[u] = static_cast<char>(toupper(cmd[u]));
         }
 
         if (strcmp(cmd.c_str(), ByteCodeString[j]) == 0) {

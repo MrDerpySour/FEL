@@ -26,7 +26,7 @@ public:
     if (id < 0 || id > UINT16_MAX) {
       throw flag_invalid_id_exception();
     } else {
-      id_ = id;
+      id_ = static_cast<flag_id>(id);
     }
   };
 

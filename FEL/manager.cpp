@@ -429,7 +429,7 @@ void Manager::registerFunction(const char* syntax, CommandClass* func) {
 
   if (context_.ignore_case_) {
     for (size_t i = 0; i < syntax_upper.size(); ++i) {
-      syntax_upper[i] = toupper(syntax_upper[i]);
+      syntax_upper[i] = static_cast<char>(toupper(syntax_upper[i]));
     }
   }
 
@@ -627,7 +627,7 @@ void Manager::restoreState() {
   }
 
   if (!index_backups_.empty()) {
-    context_.instruction_index = index_backups_.top();
+    context_.instruction_index = static_cast<size_t>(index_backups_.top());
     index_backups_.pop();
   }
 }
