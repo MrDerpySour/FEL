@@ -1,6 +1,5 @@
------
+highlighter: rogue
 theme: jekyll-theme-cayman
 title: "FEL | Docs"
 description: The documentation of Flag Event Language
------
-page.title: <img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-light.png" alt="Logo" width=520px />
+name: <img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-light.png" alt="Logo" width=520px />
