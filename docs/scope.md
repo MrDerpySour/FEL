@@ -4,30 +4,30 @@
 -----
 
 If you want to organize your code you can use scopes.  
-You can define a scope by using the [directive](directives.html) `group` followed with a name.  
-After you put your events inside the group you can type `endgroup` to go back to the global scope.  
+You can define a scope by using the [directive](directives.html) `scope` followed with a name.  
+After you put your events inside the group you can type `endscope` to go back to the global scope.  
 
 Nested scopes are not supported.
 
 Example:
 ```
 // Global scope
-#group "hello"
+#scope "hello"
 // Scope "hello"
-#endgroup
+#endscope
 // Global scope
 ```
 
 Example of nested behaviour:
 ```
 // Global scope
-#group "1"
+#scope "1"
 // Scope "1"
-#group "2"
+#scope "2"
 // Scope "2"
-#endgroup
+#endscope
 // Global scope
-#endgroup
+#endscope
 // Still global scope
 ```
 
