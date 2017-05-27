@@ -347,7 +347,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
         if (context_.current_instructions[context_.instruction_index].parameters[0] == '{') {
           std::string str = context_.current_instructions[context_.instruction_index].parameters.substr(1, context_.current_instructions[context_.instruction_index].parameters.length() - 1);
-          int func_seperate_index = str.find_last_of('}');
+          int func_seperate_index = static_cast<int>(str.find_last_of('}'));
 
           if (func_seperate_index == -1) {
             printf("Error: invalid function call\n");
@@ -387,7 +387,7 @@ bool Manager::saveFlags(const std::string& file_path) {
   std::string content = "";
 
   for (size_t i = 0; i < flags_.size(); ++i) {
-    content += std::to_string(flags_[i]->id()) + '=' + std::to_string(flags_[i]->is_set()) + '\n';
+    content += std::to_string(flags_[static_cast<int>(i)]->id()) + '=' + std::to_string(flags_[static_cast<int>(i)]->is_set()) + '\n';
   }
 
   return helper::createFile(file_path, content);
@@ -488,12 +488,12 @@ void Manager::printDebug() {
 
   for (auto it = events_.begin(); it != events_.end(); ++it) {
     for (size_t i = 0; i < it->second.size(); ++i) {
-      if (it->second[i].id != -1) {
-        printf("\n %s %d:\n", ((it->first == "") ? "" : ("'" + std::string(it->first) + "'").c_str()),  it->second[i].id);
+      if (it->second[static_cast<int>(i)].id != -1) {
+        printf("\n %s %d:\n", ((it->first == "") ? "" : ("'" + std::string(it->first) + "'").c_str()),  it->second[static_cast<int>(i)].id);
 
-        for (size_t instr = 0; instr < it->second[i].instructions.size(); ++instr) {
-          printf("\t%s\t[ %s ]\n", ByteCodeString[it->second[i].instructions.at(instr).byte_code],
-                 it->second[i].instructions[instr].parameters.c_str());
+        for (size_t instr = 0; instr < it->second[static_cast<int>(i)].instructions.size(); ++instr) {
+          printf("\t%s\t[ %s ]\n", ByteCodeString[it->second[static_cast<int>(i)].instructions.at(instr).byte_code],
+                 it->second[static_cast<int>(i)].instructions[instr].parameters.c_str());
         }
       }
 
@@ -616,7 +616,7 @@ void Manager::noLoop() {
 void Manager::saveState() {
   // Save current state
   instruction_backups_.push(context_.current_instructions);
-  index_backups_.push(context_.instruction_index);
+  index_backups_.push(static_cast<int>(context_.instruction_index));
 }
 
 void Manager::restoreState() {

@@ -34,7 +34,7 @@ void Interpreter::compile(Event* evnt,
       int hash_seperator = line.find_first_of(' ');
 
       if (hash_seperator == -1) {
-        hash_seperator = line.size();
+        hash_seperator = static_cast<int>(line.size());
       }
 
       std::string cmd = line.substr(1, hash_seperator - 1);
@@ -106,7 +106,7 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
       evnt->id = -1;
 
       if (hash_seperator == -1) {
-        hash_seperator = line.size();
+        hash_seperator = static_cast<int>(line.size());
       }
 
       std::string cmd = line.substr(1, hash_seperator - 1);
