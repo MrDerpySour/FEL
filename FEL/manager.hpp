@@ -142,7 +142,7 @@ class Manager {
 
   // For saving/loading states when executing multiple events
   std::stack<std::vector<Instruction>> instruction_backups_;
-  std::stack<int> index_backups_;
+  std::stack<size_t> index_backups_;
 
   // Error detection
   std::vector<std::pair<std::string, int>> infinite_loop_;

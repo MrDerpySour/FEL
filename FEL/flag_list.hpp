@@ -74,6 +74,10 @@ class FlagList {
     return at(index);
   }
 
+  FEL_API Flag* operator[](const size_t& index) const& noexcept {
+    return at(index);
+  }
+
   /**
    * A function to check whether an id is already present
    * @param id The id to check for

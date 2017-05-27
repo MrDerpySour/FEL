@@ -31,10 +31,10 @@ void Interpreter::compile(Event* evnt,
 
     // Parse group
     if (line[0] == '#') {
-      int hash_seperator = line.find_first_of(' ');
+      size_t hash_seperator = line.find_first_of(' ');
 
-      if (hash_seperator == -1) {
-        hash_seperator = static_cast<int>(line.size());
+      if (hash_seperator == std::string::npos) {
+        hash_seperator = line.size();
       }
 
       std::string cmd = line.substr(1, hash_seperator - 1);
@@ -51,7 +51,7 @@ void Interpreter::compile(Event* evnt,
     }
 
     // Parse event id
-    int i = line.find_first_of('>');
+    size_t i = line.find_first_of('>');
 
     if (i != -1) {
       int id = std::stoi(line.substr(0, i));
@@ -100,12 +100,12 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
 
     // Hash directives
     if (line[0] == '#' && context != nullptr) {
-      int hash_seperator = line.find_first_of(' ');
+      size_t hash_seperator = line.find_first_of(' ');
 
       // No code parsing will be done
       evnt->id = -1;
 
-      if (hash_seperator == -1) {
+      if (hash_seperator == std::string::npos) {
         hash_seperator = static_cast<int>(line.size());
       }
 
@@ -240,9 +240,9 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
 
   // Populate the split_cmds vector with the command and parameters
   for (size_t i = 0; i < unparsed_cmds.size(); ++i) {
-    int index = unparsed_cmds[i].find_first_of('[');
+    size_t index = unparsed_cmds[i].find_first_of('[');
 
-    if (index == -1) {
+    if (index == std::string::npos) {
       printf("Error: no parameter block openeded\n");
       evnt->instructions = { Instruction(kFelError, unparsed_cmds[i]) };
       return;
@@ -251,9 +251,9 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
     std::string tmp[2] = { unparsed_cmds[i].substr(0, index), unparsed_cmds[i].substr(index + 1) };
 
     // Error checking
-    int closing_brace_index = tmp[1].find_last_of(']');
+    size_t closing_brace_index = tmp[1].find_last_of(']');
     
-    if (closing_brace_index == -1) {
+    if (closing_brace_index == std::string::npos) {
       printf("Error: unmatched brackets in parameters block\n");
       evnt->instructions = { Instruction(kFelError, tmp[1]) };
       return;
