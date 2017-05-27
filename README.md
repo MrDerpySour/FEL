@@ -1,5 +1,5 @@
 # FEL
-x86 and x64 builds are [![Build status](https://ci.appveyor.com/api/projects/status/40a9g0j0uskbx1f1?svg=true)](https://ci.appveyor.com/project/Lunatoid/fel)
+[![Build status](https://ci.appveyor.com/api/projects/status/40a9g0j0uskbx1f1?svg=true)](https://ci.appveyor.com/project/Lunatoid/fel)
 -----
 
 -----
