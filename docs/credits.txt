@@ -1,0 +1,5 @@
+Cayman-based theme used:
+    https://github.com/pietromenna/jekyll-cayman-theme
+
+Changed made:
+    Changed the site's title from {{ site.title }} to FEL | Docs
