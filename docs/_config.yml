@@ -1,3 +1,5 @@
+highlighter: rouge
 theme: jekyll-theme-cayman
-title: Flag Event Language | Docs
+title: "FEL | Docs"
 description: The documentation of Flag Event Language
+project name: <img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-light.png" alt="Logo" width=520px />
