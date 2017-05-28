@@ -1,6 +1,6 @@
 title:        <img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-light.png" alt="Logo" width=520px />
 tagline:      An easy event-chaining scripting language made in C++
-baseurl:      ""
+baseurl:      "/FEL"
 paginate:     1
 
 # About/contact
