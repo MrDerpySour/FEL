@@ -3,3 +3,6 @@ Cayman-based theme used:
 
 Changed made:
     Changed the site's title from {{ site.title }} to FEL | Docs
+    Removed "Download as tar.gz" button
+    Set hrefs of the remaining 2 buttons
+    Removed unused files/file contents
