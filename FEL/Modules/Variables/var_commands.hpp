@@ -38,7 +38,7 @@ class FelDeleteVar : public CommandClass {
   FelDeleteVar(VariablesMemory* memory) :
     memory_(memory) {}
 
-  FEL_API void execute(const std::string& parameters, FlagList* list, Context* context) {
+  FEL_API void execute(const std::string& parameters, FlagList*, Context* context) {
     memory_->remove(context->parseVariableString(parameters));
   }
 

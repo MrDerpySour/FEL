@@ -35,18 +35,18 @@ public:
   /**
    * @return Whether or not the flag is set
    */
-  FEL_API const bool& is_set() const& noexcept { return state_; }
+  FEL_API const bool& is_set() const { return state_; }
 
   /**
    * Sets the state of the flag
    * @param state The new state
    */
-  FEL_API void set(const bool& state = true) noexcept { state_ = state; }
+  FEL_API void set(const bool& state = true) { state_ = state; }
 
   /**
    * @return The flag's id
    */
-  FEL_API const flag_id& id() const& noexcept { return id_; }
+  FEL_API const flag_id& id() const { return id_; }
 
   /* Operators */
 

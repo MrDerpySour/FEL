@@ -6,7 +6,7 @@ namespace fel {
 namespace modules {
 namespace variables {
 
-void FelRegisterVar::execute(const std::string& parameters, FlagList* list, Context* context) {
+void FelRegisterVar::execute(const std::string& parameters, FlagList*, Context* context) {
   std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
   Var var;
 
@@ -58,7 +58,7 @@ void FelRegisterVar::execute(const std::string& parameters, FlagList* list, Cont
   memory_->add(var);
 }
 
-void FelSetVar::execute(const std::string& parameters, FlagList* list, Context* context) {
+void FelSetVar::execute(const std::string& parameters, FlagList*, Context* context) {
   std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
   if (memory_->variables_.find(tmp[0]) != memory_->variables_.end()) {
     Var var = memory_->get(tmp[0]);
@@ -76,7 +76,7 @@ void FelSetVar::execute(const std::string& parameters, FlagList* list, Context* 
   }
 }
 
-void FelCompareVar::execute(const std::string& parameters, FlagList* list, Context* context) {
+void FelCompareVar::execute(const std::string& parameters, FlagList*, Context* context) {
   std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
 
   if (!(tmp.size() == 3 || tmp.size() == 4)) {

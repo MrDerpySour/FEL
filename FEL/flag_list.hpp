@@ -55,7 +55,7 @@ class FlagList {
   /**
    * @return How many elements are active in the list
    */
-  FEL_API const size_t& size() const& noexcept { return data_.size(); }
+  FEL_API const size_t& size() const { return data_.size(); }
 
   /**
    * @param index The index of the Flag
@@ -78,11 +78,11 @@ class FlagList {
   
   /* Operators */
 
-  FEL_API Flag* operator[](const int& index) const& noexcept {
+  FEL_API Flag* operator[](const int& index) const {
     return at(index);
   }
 
-  FEL_API Flag* operator[](const size_t& index) const& noexcept {
+  FEL_API Flag* operator[](const size_t& index) const {
     return at(index);
   }
 

@@ -157,7 +157,6 @@ bool Manager::executeBytecode(const int& event_executed) {
 
               checkInfiniteLoop(context_.scope, evnt_id);
               return this->executeEvent(evnt_id);
-              noLoop();
             }
           }
         } catch (...) {
