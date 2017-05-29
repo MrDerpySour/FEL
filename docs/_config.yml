@@ -1,4 +1,4 @@
-title: <img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-light.png" alt="Logo" style="max-width: 50%; height: auto;" height=auto />
+title: <img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-light.png" alt="Logo" style="max-width: 50%; height: auto;" />
 description: An easy event-chaining scripting language made in C++
 baseurl: "/FEL"
 show_downloads: true
