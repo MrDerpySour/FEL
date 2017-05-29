@@ -1,7 +1,7 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-dark.png" style="max-width:100%; height:auto;" alt="Logo"/></p>
 
-<p align="center"><img src="https://ci.appveyor.com/api/projects/status/40a9g0j0uskbx1f1?svg=true" href="https://ci.appveyor.com/project/Lunatoid/fel" alt="Build status"/></p>
+<a href="https://ci.appveyor.com/project/Lunatoid/fel"><p align="center"><img src="https://ci.appveyor.com/api/projects/status/40a9g0j0uskbx1f1?svg=true" href="https://ci.appveyor.com/project/Lunatoid/fel" alt="Build status"/></p></a>
 
 -----
 
