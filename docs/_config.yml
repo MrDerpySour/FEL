@@ -1,11 +1,4 @@
-title:        <img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-light.png" alt="Logo" width=520px />
-tagline:      An easy event-chaining scripting language made in C++
-baseurl:      "/FEL"
-
-# About/contact
-author:
-  name:       Lunatoid
-  url:        https://github.com/Lunatoid
-
-#Others
-markdown: kramdown
+title:          <img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-light.png" alt="Logo" width=520px />
+tagline:        An easy event-chaining scripting language made in C++
+baseurl:        "/FEL"
+show_downloads: true
