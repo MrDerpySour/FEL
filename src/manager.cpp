@@ -423,6 +423,11 @@ bool Manager::loadFlags(const std::string& file_path) {
 }
 
 void Manager::registerFunction(const char* syntax, CommandClass* func) {
+  
+  if (std::string(syntax).find('-') != std::string::npos) {
+    printf("Error: '-' is not allowed in function syntax\n");
+    return;
+  }
 
   std::string syntax_upper = syntax;
 
