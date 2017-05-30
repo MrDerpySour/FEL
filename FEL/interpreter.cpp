@@ -150,13 +150,13 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
 
 
       // Groups
-      if (cmd == "group") {
+      if (cmd == "scope") {
         scope = line.substr(hash_seperator + 2, line.length() - hash_seperator - 3);
         context->scope = scope;
         return;
       }
 
-      if (cmd == "endgroup") {
+      if (cmd == "endscope") {
         scope = "";
         context->scope = scope;
         return;
