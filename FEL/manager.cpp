@@ -32,7 +32,7 @@ void Manager::load(const std::string& file_path) {
     if (line == "#debug") {
       context_.debug_mode_ = true;
     } else {
-      Event evnt = Interpreter::inject(line, scope, &context_);
+      Event evnt = Interpreter::inject(line, scope, &file, &context_);
       if (evnt.id != -1) {
         if (events_[scope].find(evnt.id) == events_[scope].end())
           events_[scope].insert(std::make_pair(evnt.id, evnt));
@@ -551,7 +551,7 @@ void Manager::loadLinkedFiles() {
       }
 
       while (std::getline(file, line)) {
-        Event evnt = Interpreter::inject(line, scope, &context_);
+        Event evnt = Interpreter::inject(line, scope, &file, &context_);
         if (evnt.id != -1) {
           if (events_[scope].find(evnt.id) == events_[scope].end())
             events_[scope].insert(std::make_pair(evnt.id, evnt));

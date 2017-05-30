@@ -5,6 +5,7 @@
 #include "helper.hpp"
 
 static bool multi_line_comment = false;
+static bool multi_line_event = false;
 
 namespace fel {
 
@@ -58,7 +59,7 @@ void Interpreter::compile(Event* evnt,
 
       if (current_scope == scope && evnt_id == id) {
         std::string dummy = "";
-        Interpreter::inject(evnt, line, dummy, context);
+        Interpreter::inject(evnt, line, dummy, &file, context);
         return;
       }
     } else {
@@ -69,13 +70,20 @@ void Interpreter::compile(Event* evnt,
   printf("Error: no event found with ID '%d'%s\n", evnt_id, ((scope == "") ? "" : (" in scope " + scope).c_str()));
 }
 
-Event Interpreter::inject(const std::string& code, std::string& scope, Context* context) {
+Event Interpreter::inject(const std::string& code,
+                          std::string& scope,
+                          std::fstream* file,
+                          Context* context) {
   Event evnt;
-  inject(&evnt, code, scope, context);
+  inject(&evnt, code, scope, file, context);
   return evnt;
 }
 
-void Interpreter::inject(Event* evnt, const std::string& code, std::string& scope, Context* context) {
+void Interpreter::inject(Event* evnt,
+                         const std::string& code,
+                         std::string& scope,
+                         std::fstream* file,
+                         Context* context) {
   std::string line = code;
 
   if (line.length() >= 2) {
@@ -167,38 +175,44 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
     }
 
     size_t i = line.find_first_of('>');
-    
-    try {
-      if (i != std::string::npos) {
-        evnt->id = std::stoi(line.substr(0, i));
-      }
 
-      // If event is empty:
-      // n>|
-      // n>-|
-      std::string righthand_code = line.substr(i + 1);
-      helper::str_replace_all(righthand_code, "-", "");
-      if (righthand_code == "|") {
-        evnt->instructions = { Instruction(kStart, ""), Instruction(kEnd, "") };
+    try {
+      if (i != std::string::npos && !multi_line_event) {
+        evnt->id = std::stoi(line.substr(0, i));
+
+        // If event is empty:
+        // n>|
+        // n>-|
+        std::string righthand_code = line.substr(i + 1);
+        helper::str_replace_all(righthand_code, "-", "");
+        if (righthand_code == "|") {
+          evnt->instructions = { Instruction(kStart, ""), Instruction(kEnd, "") };
+          return;
+        }
+      } else if (i != std::string::npos && multi_line_event) {
+        printf("Error: event '%d' leaks into event '%d'\n", evnt->id, std::stoi(line.substr(0, i)));
+        evnt->instructions = { Instruction(kFelError, "") };
         return;
       }
-
     }
     catch (...) {
       printf("Error: ID couldn't be found\n");
       evnt->instructions = { Instruction(kFelError, line) };
       return;
     }
-  }
-  else {
+  } else {
     return;
   }
 
   // Check if end is defined
-  if (line.back() != '|') {
+  if (line.back() != '|' && line.back() != '$') {
     printf("Error: no end marker found\n");
     evnt->instructions = { Instruction(kFelError, line) };
     return;
+  } else if (line.back() == '|') {
+    multi_line_event = false;
+  }else if (line.back() == '$') {
+    multi_line_event = true;
   }
 
   // Generate unique replacement token
@@ -331,7 +345,13 @@ void Interpreter::inject(Event* evnt, const std::string& code, std::string& scop
   }
 
   // Add the ending point
-  evnt->instructions.push_back(Instruction(kEnd, ""));
+  if (!multi_line_event) {
+    evnt->instructions.push_back(Instruction(kEnd, ""));
+  } else {
+    std::string new_code;
+    std::getline(*file, new_code);
+    inject(evnt, new_code, scope, file, context);
+  }
 }
 
 }  // namespace fel

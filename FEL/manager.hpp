@@ -23,10 +23,19 @@ namespace fel {
 class Manager {
  public:
   FEL_API Manager();
+
+  /**
+   * Loads a source file
+   * @param file_path The filepath to the file
+   */
+  FEL_API Manager(const std::string& file_path) {
+    load(file_path);
+  }
+
   FEL_API ~Manager();
 
   /**
-   * Loads a file with multiple events with each event on a different line
+   * Loads a source file
    * @param file_path The filepath to the file
    */
   FEL_API void load(const std::string& file_path);
