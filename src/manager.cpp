@@ -422,7 +422,7 @@ bool Manager::loadFlags(const std::string& file_path) {
   return true;
 }
 
-void Manager::registerFunction(const char* syntax, CommandClass* func) {
+void Manager::registerFunction(const std::string& syntax, CommandClass* func) {
   
   if (std::string(syntax).find('-') != std::string::npos) {
     printf("Error: '-' is not allowed in function syntax\n");
@@ -439,7 +439,7 @@ void Manager::registerFunction(const char* syntax, CommandClass* func) {
 
   if (!context_.ignore_case_) {
     for (int i = kFelBegin; i != kFelEnd; ++i) {
-      if (strcmp(ByteCodeString[i], syntax) == 0) {
+      if (strcmp(ByteCodeString[i], syntax.c_str()) == 0) {
         printf("Error: function overrides are not supported\n");
         return;
       }
@@ -458,7 +458,7 @@ void Manager::registerFunction(const char* syntax, CommandClass* func) {
       if (custom_commands_.find(syntax) == custom_commands_.end()) {
         custom_commands_.insert(std::make_pair(syntax, func));
       } else {
-        printf("Error: command with that syntax already exists\n\tSyntax '%s'\n", syntax);
+        printf("Error: command with that syntax already exists\n\tSyntax '%s'\n", syntax.c_str());
       }
     } else {
       if (custom_commands_.find(syntax_upper) == custom_commands_.end()) {

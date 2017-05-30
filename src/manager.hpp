@@ -73,7 +73,7 @@ class Manager {
    * @param syntax The syntax for the function
    * @param func A pointer to the function
    */
-  FEL_API void registerFunction(const char* syntax, CommandClass* func);
+  FEL_API void registerFunction(const std::string& syntax, CommandClass* func);
 
   /**
    * Checks whether or not a flag at id is set
