@@ -66,5 +66,5 @@ If you want to execute an event inside a custom coammand, you should use use the
 The difference?  
 At the end of the `execute` function it resets the `fatal_error_` boolean, this needs to be done at the very end.  
 
-<h3 align="center"><a href="helper.html">Helper</a></h3>
+<h3 align="center"><a href="helper.html">Next</a></h3>
 <h3 align="center"><a href="index.html">Index</a></h3>
