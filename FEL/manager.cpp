@@ -153,7 +153,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
           if (flags_.at_id(flag_id) != nullptr) {
             if (flags_.at_id(flag_id)->is_set()) {
-              context_.scope = (tmp.size() == 2) ? "" : tmp[2];
+              context_.scope = (tmp.size() != 2) ? "" : tmp[1];
 
               checkInfiniteLoop(context_.scope, evnt_id);
               return this->executeEvent(evnt_id);
@@ -257,7 +257,7 @@ bool Manager::executeBytecode(const int& event_executed) {
         try {          
          int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters)));
 
-         context_.scope = (tmp.size() == 2) ? "" : tmp[2];
+         context_.scope = (tmp.size() != 2) ? "" : tmp[1];
 
          checkInfiniteLoop(context_.scope, evnt_id);
 
@@ -321,7 +321,7 @@ bool Manager::executeBytecode(const int& event_executed) {
           return false;
         }
 
-        context_.scope = ((tmp.size() == 2) ? "" : tmp[2]);
+        context_.scope = ((tmp.size() != 2) ? "" : tmp[1]);
 
         checkInfiniteLoop(context_.scope, evnt_id);
 
@@ -634,7 +634,7 @@ void Manager::restoreState() {
 bool Manager::checkInfiniteLoop(const std::string& scope, const int& evnt_id, const bool& add_id) {
   // Catch infinite loop error
   if (std::find(infinite_loop_.begin(), infinite_loop_.end(), std::make_pair(scope, evnt_id)) != infinite_loop_.end()) {
-
+  
     fatal_error_ = true;
     msg_ = "Error: infinite loop detected\n";
 
