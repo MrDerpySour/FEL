@@ -62,7 +62,7 @@ Here's an overview of the flags:
 2. Whether or not the door is open.
 
 Lastly, we'll assume we have a [custom command](custom-commands.html) in place.
-* Transfer[map_name] Transfers the player to another map.
+* `Transfer[map_name]`: Transfers the player to another map.
 
 ```
 1>PRI[You got the key!]-FLS[1]|
