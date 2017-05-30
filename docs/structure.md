@@ -41,7 +41,7 @@ To pass in parameters, you open a parameter block with the square brackets `[ ]`
 Even if a command takes no parameters, you still open a parameter block.  
 Since we're making a Hello world script, we'll pass in "Hello, world!" as the syntax.
 
-  NOTE: Escape codes line `\n`, `\t`, `\r`, `\b`, `\v`, `\f`, `\a` and `\0` will work.
+  NOTE: Escape codes `\n`, `\t`, `\r`, `\b`, `\v`, `\f`, `\a` and `\0` will work.
 
 Event so far:
 ```
@@ -74,6 +74,25 @@ Event so far:
 And now we add the `|` to end the event.  
 ```
 1>PRI[Hello, world!\n]-SYS[pause]|
+```
+
+### 6. Mutliline events
+
+What if events get so long that you need to split it up across multiple lines?  
+We got the multiline marker for that!  
+Instead of placing a `|` at the end, put a `$` instead.
+
+Example:
+```
+1>PRI[Hello, ]$
+PRI[world!]|
+```
+
+And if you want to indent the code you can use the `-`.
+
+```
+1>PRI[Hello, ]$
+--PRI[world!]|
 ```
 
 ### Structure Philosophy
