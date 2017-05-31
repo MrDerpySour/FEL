@@ -1,8 +1,8 @@
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
 
 # Syntax
 -----
-NOTE: The `scope` parameter is always optional. If it isn't set, global scope is assumed
+NOTE: The `scope` parameter is always optional. If it isn't set, [global scope](scope) is assumed
 
 ## Core
 
@@ -30,5 +30,5 @@ NOTE: The `scope` parameter is always optional. If it isn't set, global scope is
 | SET    | Set      | Sets a variable                               | `name`, `value`                     |
 | CMP    | Compare  | Compares 2 values, jumps to event_id if equal | `val1`, `val2`, `event_id`, `scope` |
 
-<h3 align="center"><a href="structure.html">Next</a></h3>
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="structure">Next</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
