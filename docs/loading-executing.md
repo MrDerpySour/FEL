@@ -38,7 +38,7 @@ int main() {
 ```
 
 `load` will return false if there were any errors encountered, it will also print the errors to the screen.  
-Now to execute an event we can use the `execute` function, which takes 1 parameter: the event's id (int).
+Now to execute an event we can use the `execute` function, which takes 2 parameters: the event's id and the [scope](scope.html).
 
 ```cpp
 #include <FEL/manager.hpp>
