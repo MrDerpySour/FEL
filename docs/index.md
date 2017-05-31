@@ -6,24 +6,24 @@ Flag Event Language or FEL is a simple scripting language inspired by Cave Story
 # Index
 -----
 ## FEL
-* [Syntax](syntax.html)
-* [Structure](structure.html)
-* [Directives](directives.html)
-* [Modules](modules.html)
-* [Flags](flags.html)
-* [Variables](variables.html)
-* [Scopes](scope.html)
-* [Miscellaneous](fel-misc.html)
+* [Syntax](syntax)
+* [Structure](structure)
+* [Directives](directives)
+* [Modules](modules)
+* [Flags](flags)
+* [Variables](variables)
+* [Scopes](scope)
+* [Miscellaneous](fel-misc)
 
 ## C++
-* [Loading & Executing](loading-executing.html)
-* [Context](context.html)
-* [Custom Commands](custom-commands.html)
-* [Helper](helper.html)
+* [Loading & Executing](loading-executing)
+* [Context](context)
+* [Custom Commands](custom-commands)
+* [Helper](helper)
 
 ## Misc
-* [Special Thanks](special-thanks.html)
-* [Contact](contact.html)
+* [Special Thanks](special-thanks)
+* [Contact](contact)
 
 -----
 ### Notepad++ Themes
