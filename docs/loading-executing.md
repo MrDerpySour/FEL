@@ -1,4 +1,4 @@
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
 
 # Loading & Executing
 -----
@@ -24,7 +24,7 @@ int main() {
 }
 ```
 
-Let's take our Hello World script from [this](structure.html) tutorial and load it.  
+Let's take our Hello World script from [this](structure) tutorial and load it.  
 We can load files using the `load` function, which takes 1 parameter: the filepath.
 
 ```cpp
@@ -38,7 +38,7 @@ int main() {
 ```
 
 `load` will return false if there were any errors encountered, it will also print the errors to the screen.  
-Now to execute an event we can use the `execute` function, which takes 2 parameters: the event's id and the [scope](scope.html).
+Now to execute an event we can use the `execute` function, which takes 2 parameters: the event's id and the [scope](scope).
 
 ```cpp
 #include <FEL/manager.hpp>
@@ -67,5 +67,5 @@ int main() {
 
 These are the basics of loading and executing events.
 
-<h3 align="center"><a href="context.html">Next</a></h3>
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="context">Next</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
