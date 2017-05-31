@@ -1,4 +1,4 @@
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
 
 # Structure
 -----
@@ -31,7 +31,7 @@ Event so far:
 
 ### 3. Syntax & Parameters
 
-Next you can enter your [syntax](syntax.html).  
+Next you can enter your [syntax](syntax).  
 In this case, we'll be making a Hello World script.  
 
 Looking at the syntax list we can see that `PRI` is the syntax for printing to the console.  
@@ -100,5 +100,5 @@ And if you want to indent the code you can use the `-`.
 The structuring actually has some "philosophy" behind it.  
 The idea was that it resembled a pipeline with the `>` being the beginning, the `-` being the pipe and the `|` being the stop.  
 
-<h3 align="center"><a href="directives.html">Next</a></h3>
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="directives">Next</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
