@@ -50,7 +50,7 @@ int main() {
   return 0;
 }
 ```
-NOTE: use the `execute` function and NOT the `executeEvent` function. [See why.](custom-commands.html)
+NOTE: use the `execute` function and NOT the `executeEvent` function. [See why.](custom-commands)
 
 To `execute` events that aren't in the global scope, simply use the second parameter to specify a scope.  
 
