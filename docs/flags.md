@@ -61,7 +61,7 @@ Here's an overview of the flags:
 1. Whether or not the player has the key.
 2. Whether or not the door is open.
 
-Lastly, we'll assume we have a [custom command](custom-commands.html) in place.
+Lastly, we'll assume we have a [custom command](custom-commands) in place.
 * `Transfer[map_name]`: Transfers the player to another map.
 
 ```
@@ -72,5 +72,5 @@ Lastly, we'll assume we have a [custom command](custom-commands.html) in place.
 4>Transfer[Other area]|
 ```
 
-<h3 align="center"><a href="variables.html">Next</a></h3>
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="variables">Next</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
