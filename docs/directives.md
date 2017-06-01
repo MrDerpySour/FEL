@@ -1,4 +1,4 @@
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
 
 # Directives
 -----
@@ -33,7 +33,7 @@ Example:
 
 ### Module
 
-`module` will load a [module](modules.html).  
+`module` will load a [module](modules).  
 
 Example:
 ```
@@ -51,7 +51,7 @@ Example:
 
 ### Flags
 
-This will set the save/load filepath for the [flags](flags.html).  
+This will set the save/load filepath for the [flags](flags).  
 Flags will be saved/loaded in a format similar to .ini files.
 
 Example:
@@ -61,9 +61,9 @@ Example:
 
 ### Vars
 
-This will set the save/load filepath for the [variables](variables.html).  
+This will set the save/load filepath for the [variables](variables).  
 This will only take effect if the `variables` module is loaded.  
-Vars will be saved/loaded in [fvt](fel-misc.html) format.
+Vars will be saved/loaded in [fvt](fel-misc) format.
 
 Example:
 ```
@@ -82,7 +82,7 @@ Example:
 
 ### Scopes
 
-[Scopes](scope.html) allow you to organize your events better and avoid ID conflicts.  
+[Scopes](scope) allow you to organize your events better and avoid ID conflicts.  
 To go back to the global scope, you can use `endscope`
 
 Example:
@@ -95,5 +95,5 @@ Example:
 // Global scope
 ```
 
-<h3 align="center"><a href="modules.html">Next</a></h3>
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="modules">Next</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
