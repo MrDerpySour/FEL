@@ -92,21 +92,6 @@ class Manager {
   FEL_API const Context* context() const { return &context_; }
 
   /**
-   * Checks if you're inside an infinite loop
-   * @param scope The name of the group the event is in
-   * @param evnt_id The ID of the event you're going to call
-   * @param add_id Whether or not to add the ID to the infinite loop's watch list
-   * @return Whether or not you're executing an infinite loop or not
-   */
-  FEL_API bool checkInfiniteLoop(const std::string& scope, const int& evnt_id, const bool& add_id = true);
-
-  /**
-   * Removes the id from the infite loop checker
-   * @param evnt_id The ID to remove
-   */
-  FEL_API void noLoop();
-
-  /**
    * Saves the current instructions
    */
   FEL_API void saveState();
@@ -115,12 +100,6 @@ class Manager {
    * Restores the last saved instructions
    */
   FEL_API void restoreState();
-
-  /**
-   * @return Whether or not a fatal error has occured
-   * @return Whether there are any fatal errors or not
-   */
-  FEL_API bool checkFatalError();
 
  private:
   /**

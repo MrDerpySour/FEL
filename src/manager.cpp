@@ -68,6 +68,18 @@ bool Manager::execute(const int& event_id, const std::string& scope) {
   bool result = executeEvent(event_id);
 
   if (fatal_error_) {
+    infinite_loop_.clear();
+
+    while (!instruction_backups_.empty()) {
+      instruction_backups_.pop();
+    }
+
+    while (!index_backups_.empty()) {
+      index_backups_.pop();
+    }
+
+    printf("%s", msg_.c_str());
+
     fatal_error_ = false;
     msg_ = "No error message available";
   }
@@ -76,6 +88,21 @@ bool Manager::execute(const int& event_id, const std::string& scope) {
 }
 
 bool Manager::executeEvent(const int& evnt_id) {
+
+  // Catch infinite loop error
+  if (std::find(infinite_loop_.begin(), infinite_loop_.end(), std::make_pair(context_.scope, evnt_id)) != infinite_loop_.end()) {
+
+    fatal_error_ = true;
+    msg_ = "Error: infinite loop detected\n";
+
+    context_.current_instructions.clear();
+    context_.instruction_index = 0;
+    return false;
+  }
+
+  infinite_loop_.push_back(std::make_pair(context_.scope, evnt_id));
+
+  // Load event and check for additional error checking
   auto group_it = events_.find(context_.scope.c_str());
 
   if (group_it == events_.end()) {
@@ -114,13 +141,15 @@ bool Manager::executeEvent(const int& evnt_id) {
     return false;
   }
 
-  return executeBytecode(evnt_it->second.id);
+  bool result = executeBytecode(evnt_it->second.id);
+
+  if (!infinite_loop_.empty())
+    infinite_loop_.pop_back();
+
+  return result;
 }
 
 bool Manager::executeBytecode(const int& event_executed) {
-
-  if (checkFatalError() == true)
-    return false;
 
   for (context_.instruction_index = 0; context_.instruction_index < context_.current_instructions.size(); ++context_.instruction_index) {
 
@@ -153,9 +182,8 @@ bool Manager::executeBytecode(const int& event_executed) {
 
           if (flags_.at_id(flag_id) != nullptr) {
             if (flags_.at_id(flag_id)->is_set()) {
-              context_.scope = (tmp.size() != 2) ? "" : tmp[1];
+              context_.scope = (tmp.size() == 2) ? tmp[1] : "";
 
-              checkInfiniteLoop(context_.scope, evnt_id);
               return this->executeEvent(evnt_id);
             }
           }
@@ -257,17 +285,13 @@ bool Manager::executeBytecode(const int& event_executed) {
         try {          
          int evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters)));
 
-         context_.scope = (tmp.size() != 2) ? "" : tmp[1];
-
-         checkInfiniteLoop(context_.scope, evnt_id);
+         context_.scope = (tmp.size() == 2) ? tmp[1] : "";
 
          saveState();
 
          executeEvent(evnt_id);
 
          restoreState();
-
-         noLoop();
 
         } catch (...) {
           printf("Error: invalid argument type (int expected)\n");
@@ -313,6 +337,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
         int evnt_id = 0;
         int count = 0;
+
         try {
           evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(tmp[0])));
           count = static_cast<int>(helper::parseMathString(context_.parseVariableString(tmp[1])));
@@ -321,21 +346,18 @@ bool Manager::executeBytecode(const int& event_executed) {
           return false;
         }
 
-        context_.scope = ((tmp.size() != 2) ? "" : tmp[1]);
-
-        checkInfiniteLoop(context_.scope, evnt_id);
+        context_.scope = ((tmp.size() == 3) ? tmp[2] : "");
 
         saveState();
 
         for (int i = 0; i < count; ++i) {
-          if (!checkFatalError())
+          if (!fatal_error_)
             executeEvent(evnt_id);
           else
             return false;
         }
-        restoreState();
 
-        noLoop();
+        restoreState();
         break; }
 
       case kFelFunc: {
@@ -492,6 +514,7 @@ void Manager::printDebug() {
 
   for (auto it = events_.begin(); it != events_.end(); ++it) {
     for (int i = 0; i < static_cast<int>(it->second.size()); ++i) {
+      // Don't print illegal events
       if (it->second[i].id != -1) {
         printf("\n %s %d:\n", ((it->first == "") ? "" : ("'" + std::string(it->first) + "'").c_str()),  it->second[i].id);
 
@@ -506,24 +529,6 @@ void Manager::printDebug() {
   }
 
   printf("\n---\n\n");
-}
-
-bool Manager::checkFatalError() {
-  if (fatal_error_) {
-    infinite_loop_.clear();
-
-    while (!instruction_backups_.empty()) {
-      instruction_backups_.pop();
-    }
-
-    while (!index_backups_.empty()) {
-      index_backups_.pop();
-    }
-
-    printf("%s", msg_.c_str());
-  }
-
-  return fatal_error_;
 }
 
 void Manager::loadLinkedFiles() {
@@ -612,11 +617,6 @@ void Manager::loadModules() {
   }
 }
 
-void Manager::noLoop() {
-  if (!infinite_loop_.empty())
-    infinite_loop_.pop_back();
-}
-
 void Manager::saveState() {
   // Save current state
   instruction_backups_.push(context_.current_instructions);
@@ -634,23 +634,6 @@ void Manager::restoreState() {
     context_.instruction_index = index_backups_.top();
     index_backups_.pop();
   }
-}
-
-bool Manager::checkInfiniteLoop(const std::string& scope, const int& evnt_id, const bool& add_id) {
-  // Catch infinite loop error
-  if (std::find(infinite_loop_.begin(), infinite_loop_.end(), std::make_pair(scope, evnt_id)) != infinite_loop_.end()) {
-  
-    fatal_error_ = true;
-    msg_ = "Error: infinite loop detected\n";
-
-    context_.current_instructions.clear();
-    context_.instruction_index = 0;
-  }
-
-  if (add_id)
-    infinite_loop_.push_back(std::make_pair(scope, evnt_id));
-
-  return fatal_error_;
 }
 
 }  // namespace fel
