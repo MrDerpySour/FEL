@@ -4,6 +4,7 @@
 #include "fel.hpp"
 
 #include <vector>
+#include <memory>
 
 #include "flag.hpp"
 
@@ -22,11 +23,7 @@ class flag_redefinition_exception : public std::exception {
 class FlagList {
  public:
   FEL_API FlagList() {}
-
-  /**
-   * Calls destroy()
-   */
-  FEL_API ~FlagList();
+  FEL_API ~FlagList() {}
 
   /**
    * Adds a new Flag at the back
@@ -39,11 +36,6 @@ class FlagList {
    * Pops the last Flag
    */
   FEL_API void pop();
-
-  /**
-   * Frees all the memory
-   */
-  FEL_API void destroy();
 
   /**
    * Returns the flag at the given id, creates a new flag if it didn't exist already
@@ -62,7 +54,7 @@ class FlagList {
    * @return The Flag at the given index, if the flag doesn't exist it will return nullptr
    */
   FEL_API Flag* at(const size_t& index) const {
-    return (index < data_.size()) ? data_[index] : nullptr;
+    return (index < data_.size()) ? data_[index].get() : nullptr;
   }
 
   /**
@@ -94,7 +86,7 @@ class FlagList {
   FEL_API bool doesIdExist(const int& id);
 
 private:
-  std::vector<Flag*> data_;
+  std::vector<std::unique_ptr<Flag>> data_;
 };
 
 }  // namespace fel

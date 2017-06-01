@@ -122,22 +122,22 @@ bool Manager::executeEvent(const int& evnt_id) {
   // Error catching
 
   if (context_.current_instructions[0].byte_code == kFelError) {
-    printf("Error: event '%d' didn't compile correctly\n", evnt_it->second.id);
+    printf("Error: event '%d' didn't compile correctly\n", evnt_it->first);
     return false;
   }
 
   if (context_.current_instructions.size() < 2) {
-    printf("Error: invalid amount of instructions parsed\n");
+    printf("Error: invalid amount of instructions parsed for event '%d'\n", evnt_it->first);
     return false;
   }
 
   if (context_.current_instructions[0].byte_code != kStart) {
-    printf("Error: no starting point defined\n");
+    printf("Error: no starting point defined for event '%d'\n", evnt_it->first);
     return false;
   }
 
   if (context_.current_instructions[context_.current_instructions.size() - 1].byte_code != kEnd) {
-    printf("Error: no end point defined\n");
+    printf("Error: no end point defined for event '%d'\n", evnt_it->first);
     return false;
   }
 

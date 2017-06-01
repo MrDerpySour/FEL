@@ -2,10 +2,6 @@
 
 namespace fel {
 
-FlagList::~FlagList() {
-  destroy();
-}
-
 void FlagList::add(const int& id) {
   if (id < 0 || id > UINT16_MAX) {
     throw flag_invalid_id_exception();
@@ -13,9 +9,9 @@ void FlagList::add(const int& id) {
 
   if (!doesIdExist(id)) {
     try {
-      data_.push_back(new Flag(id));
+      data_.push_back(std::make_unique<Flag>(id));
     } catch (flag_invalid_id_exception) {
-      delete data_.back();
+      data_.back().reset();
       data_.pop_back();
       throw flag_invalid_id_exception();
     }
@@ -26,19 +22,8 @@ void FlagList::add(const int& id) {
 
 void FlagList::pop() {
   if (data_.size() > 0) {
-    delete data_.back();
+    data_.back().reset();
     data_.pop_back();
-  }
-}
-
-void FlagList::destroy() {
-  for (size_t i = 0; i < data_.size(); ++i) {
-    if (data_[i] != nullptr)
-      delete data_[i];
-  }
-
-  if (!data_.empty()) {
-    data_.clear();
   }
 }
 
@@ -48,12 +33,12 @@ Flag* FlagList::at_id(const int& id) {
 
   for (size_t i = 0; i < data_.size(); ++i) {
     if (data_[i]->id() == id) {
-      return data_[i];
+      return data_[i].get();
     }
   }
   try {
-    data_.push_back(new Flag(id));
-    return data_.back();
+    data_.push_back(std::make_unique<Flag>(id));
+    return data_.back().get();
   } catch (flag_invalid_id_exception) {
     return nullptr;
   }
