@@ -1,11 +1,11 @@
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
 
 # Custom Commands
 ------
 Custom commands are where FEL really shines.  
 To create a custom command you first have to inherit from the `CommandClass` class and implement the pure virtual function `execute`.
 
-CustomCommand class:
+`CustomCommand` class:
 ```cpp
 class CommandClass {
  public:
@@ -14,7 +14,7 @@ class CommandClass {
 ```
 
 The reason I chose for a class instead of a function is because classes give you much more freedom.  
-The commands from the [variables module](variables.html) are all custom commands.  
+The commands from the [variables module](variables) are all custom commands.  
 
 Let's take a look at an example command.  
 Here we'll assume there is a `Player` class which has some public variables.  
@@ -55,16 +55,16 @@ manager.registerFunction("PrintStats", &print_stats);
 ```
 
 And now you're ready to use your custom command!  
-It is recommended to add your functions right after you're calling `load` to avoid name-clashing with other [modules](modules.html).  
+It is recommended to add your functions right after you're calling `load` to avoid name-clashing with other [modules](modules).  
 
 ## execute VS executeEvent
 
-In [this](loading-executing.html) tutorial I said that when executing an event, you should always use the `execute` function.  
+In [this](loading-executing) tutorial I said that when executing an event, you should always use the `execute` function.  
 So when do you use the executeEvent function? Inside custom commands!
 
 If you want to execute an event inside a custom coammand, you should use use the `executeEvent` function.  
 The difference?  
 At the end of the `execute` function it resets the `fatal_error_` boolean, this needs to be done at the very end.  
 
-<h3 align="center"><a href="helper.html">Next</a></h3>
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="helper">Next</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
