@@ -1,4 +1,4 @@
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
 
 # Miscellaneous
 -----
@@ -24,7 +24,7 @@ There are only 2 reserved variables, `id` and `scope`.
 `scope` is automatically converted to the event's scope.  
 
 Reserved variables are accessed the same way as other variables, with 2 `%` on each side.  
-You do not need to include the `variables` [module](modules.html) for this to work.
+You do not need to include the `variables` [module](modules) for this to work.
 
 Example:
 ```
@@ -57,4 +57,4 @@ Example:
 >number|float|3.1415<
 ```
 
-<h3 align="center"><a href="index.html">Index</a></h3>
+<h3 align="center"><a href="index">Index</a></h3>
