@@ -58,6 +58,11 @@ manager.registerFunction("PrintStats", &print_stats);
 And now you're ready to use your custom command!  
 It is recommended to add your functions right after you're calling `load` to avoid name-clashing with other [modules](modules).  
 
+Now that the function is added, you can use it in any .fel script.
+```
+1>PRI[Current stats are:\n]-PrintStats[]|
+```
+
 ## execute VS executeEvent
 
 In [this](loading-executing) tutorial I said that when executing an event, you should always use the `execute` function.  
