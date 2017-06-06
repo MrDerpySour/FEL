@@ -9,7 +9,7 @@ To create a custom command you first have to inherit from the `CommandClass` cla
 ```cpp
 class CommandClass {
  public:
-   virtual void execute(const std::string& parameters, FlagList* list, Context* context) = 0;
+  virtual void execute(const std::string& parameters, FlagList* list, Context* context) = 0;
 };
 ```
 
@@ -26,6 +26,7 @@ class PrintStats : public fel::CustomClass {
   PrintStats(Player* player) : player_(player) {}
   
   void execute(const std::string& parameters, FlagList* list, Context* context) override;
+  
  private:
   Player* player_ = nullptr;
 }
@@ -62,7 +63,7 @@ It is recommended to add your functions right after you're calling `load` to avo
 In [this](loading-executing) tutorial I said that when executing an event, you should always use the `execute` function.  
 So when do you use the executeEvent function? Inside custom commands!
 
-If you want to execute an event inside a custom coammand, you should use use the `executeEvent` function.  
+If you want to execute an event inside a custom command, you should use use the `executeEvent` function.  
 The difference?  
 At the end of the `execute` function it resets the `fatal_error_` boolean, this needs to be done at the very end.  
 
