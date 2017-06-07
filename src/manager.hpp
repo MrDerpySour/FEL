@@ -48,11 +48,21 @@ class Manager {
   FEL_API bool execute(const int& evnt_id, const std::string& scope = "");
 
   /**
-   * Execute a subsidairy event, meant to be used by custom commands
+   * Execute a subsidairy event
+   * Uses the context's scope.
    * @param evnt_id The ID of the event
    * @return Whether the operation executed without any errors or not
    */
-  FEL_API bool executeEvent(const int& evnt_id);
+  FEL_API bool executeSub(const int& evnt_id);
+
+  /**
+   * Adds an event
+   * @param evnt The event to add
+   * @param scope The scope to put it in
+   * @param update If the event already exists, update it
+   * @return Whether or not the operation was successful
+   */
+  FEL_API bool add(const Event& evnt, const std::string& scope = "", const bool& update = true);
 
   /**
    * Saves all the flags

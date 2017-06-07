@@ -34,12 +34,7 @@ void Manager::load(const std::string& file_path) {
     } else {
       Event evnt = Interpreter::inject(line, scope, &file, &context_);
       if (evnt.id != -1) {
-        if (events_[scope].find(evnt.id) == events_[scope].end())
-          events_[scope].insert(std::make_pair(evnt.id, evnt));
-        else {
-          printf("Error: event with id already exists\n\tID: %d\n", evnt.id);
-          return;
-        }
+        add(evnt, scope, false);
       }
     }
   }
@@ -65,7 +60,7 @@ void Manager::load(const std::string& file_path) {
 bool Manager::execute(const int& event_id, const std::string& scope) {
   context_.scope = scope;
 
-  bool result = executeEvent(event_id);
+  bool result = executeSub(event_id);
 
   if (fatal_error_) {
     infinite_loop_.clear();
@@ -87,7 +82,7 @@ bool Manager::execute(const int& event_id, const std::string& scope) {
   return result;
 }
 
-bool Manager::executeEvent(const int& evnt_id) {
+bool Manager::executeSub(const int& evnt_id) {
 
   // Catch infinite loop error
   if (std::find(infinite_loop_.begin(), infinite_loop_.end(), std::make_pair(context_.scope, evnt_id)) != infinite_loop_.end()) {
@@ -149,6 +144,20 @@ bool Manager::executeEvent(const int& evnt_id) {
   return result;
 }
 
+FEL_API bool Manager::add(const Event& evnt, const std::string& scope, const bool& update) {
+  if (events_[scope].find(evnt.id) == events_[scope].end()) {
+    events_[scope].insert(std::make_pair(evnt.id, evnt));
+    return true;
+  } else {
+    if (update) {
+      events_[context_.scope][evnt.id] = evnt;
+    } else {
+      printf("Error: event with id already exists\n\tID: %d\n", evnt.id);
+      return false;
+    }
+  }
+}
+
 bool Manager::executeBytecode(const int& event_executed) {
 
   for (context_.instruction_index = 0; context_.instruction_index < context_.current_instructions.size(); ++context_.instruction_index) {
@@ -184,7 +193,7 @@ bool Manager::executeBytecode(const int& event_executed) {
             if (flags_.at_id(flag_id)->is_set()) {
               context_.scope = (tmp.size() == 2) ? tmp[1] : "";
 
-              return this->executeEvent(evnt_id);
+              return this->executeSub(evnt_id);
             }
           }
         } catch (...) {
@@ -289,7 +298,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
          saveState();
 
-         executeEvent(evnt_id);
+         executeSub(evnt_id);
 
          restoreState();
 
@@ -312,11 +321,7 @@ bool Manager::executeBytecode(const int& event_executed) {
           Event evnt;
           Interpreter::compile(&evnt, file_path_, context_.scope, bld_event_id, &context_);
 
-          if (build_it == events_[context_.scope].end()) {
-            events_[context_.scope].insert(std::make_pair(bld_event_id, evnt));
-          } else {
-            events_[context_.scope][bld_event_id] = evnt;
-          }
+          add(evnt, context_.scope, true);
         } catch (...) {
           printf("Error: invalid argument type (int expected)\n");
           return false;
@@ -352,7 +357,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
         for (int i = 0; i < count; ++i) {
           if (!fatal_error_)
-            executeEvent(evnt_id);
+            executeSub(evnt_id);
           else
             return false;
         }
@@ -563,12 +568,7 @@ void Manager::loadLinkedFiles() {
       while (std::getline(file, line)) {
         Event evnt = Interpreter::inject(line, scope, &file, &context_);
         if (evnt.id != -1) {
-          if (events_[scope].find(evnt.id) == events_[scope].end())
-            events_[scope].insert(std::make_pair(evnt.id, evnt));
-          else {
-            printf("Error: event with id already exists\n\tID: %d\n", evnt.id);
-            return;
-          }
+          add(evnt, scope, false);
         }
       }
 

@@ -89,7 +89,7 @@ void FelCompareVar::execute(const std::string& parameters, FlagList*, Context* c
 
       context->scope = (tmp.size() == 3) ? "" : tmp[3];
 
-      parent_->executeEvent(evnt_id);
+      parent_->executeSub(evnt_id);
     } catch (...) {
       printf("Error: invalid argument type (int expected)\n");
       return;
