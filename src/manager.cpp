@@ -191,9 +191,9 @@ bool Manager::executeBytecode(const int& event_executed) {
 
           if (flags_.at_id(flag_id) != nullptr) {
             if (flags_.at_id(flag_id)->is_set()) {
-              context_.scope = (tmp.size() == 2) ? tmp[1] : "";
+              context_.scope = (tmp.size() == 3) ? tmp[2] : "";
 
-              return this->executeSub(evnt_id);
+              return executeSub(evnt_id);
             }
           }
         } catch (...) {
