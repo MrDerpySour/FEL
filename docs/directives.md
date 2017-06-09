@@ -10,16 +10,17 @@ A directive statement is made by typing a `#` followed by the command.
 
 Here is a table of all directives.
 
-| Directive    | Description                 | Parameters |
-|:-------------|:----------------------------|:-----------|
-| `link`       | Links another file          | "filepath" |
-| `module`     | Loads a module              | "name"     |
-| `debug`      | Prints debug info           | None       |
-| `flags`      | Sets flags filepath         | "filepath" |
-| `vars`       | Sets vars filepath          | "filepath" |
-| `ignorecase` | Disables case-sensitivity   | None       |
-| `scope`      | Defines a scope             | "name"     |
-| `endscope`   | Returns to the global scope | None       |
+| Directive    | Description                      | Parameters |
+|:-------------|:---------------------------------|:-----------|
+| `link`       | Links another file               | "filepath" |
+| `module`     | Loads a module                   | "name"     |
+| `debug`      | Enables the context's debug bool | None       |
+| `debugprint` | Prints out all the debug info    | None       |
+| `flags`      | Sets flags filepath              | "filepath" |
+| `vars`       | Sets vars filepath               | "filepath" |
+| `ignorecase` | Disables case-sensitivity        | None       |
+| `scope`      | Defines a scope                  | "name"     |
+| `endscope`   | Returns to the global scope      | None       |
 
 ### Link
 
@@ -42,11 +43,20 @@ Example:
 
 ### Debug
 
-`debug` will print all the debug info.  
+`debug` will enable the `debug_mode_` bool in the Manager's [Context](context).
 
 Example:
 ```
 #debug
+```
+
+### Debugprint
+
+`debugprint` will print out all the bytecode and build info after loading.
+
+Example:
+```
+#debugprint
 ```
 
 ### Flags
