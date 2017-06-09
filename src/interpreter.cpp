@@ -156,6 +156,11 @@ void Interpreter::inject(Event* evnt,
         return;
       }
 
+	    // Debugging
+	    if (cmd == "debug") {
+		    context->debug_mode_ = true;
+		    return;
+	    }
 
       // Groups
       if (cmd == "scope") {

@@ -28,9 +28,11 @@ void Manager::load(const std::string& file_path) {
     
   std::string scope = "";
   std::string line = "";
+  bool debug_print = false;
+
   while (std::getline(file, line)) {
-    if (line == "#debug") {
-      context_.debug_mode_ = true;
+    if (line == "#debugprint") {
+	    debug_print = true;
     } else {
       Event evnt = Interpreter::inject(line, scope, &file, &context_);
       if (evnt.id != -1) {
@@ -52,7 +54,7 @@ void Manager::load(const std::string& file_path) {
     context_.getModuleVariablesMemory()->loadVariables(context_.vars_file_path_);
   }
 
-  if (context_.debug_mode_) {
+  if (debug_print) {
     printDebug();
   }
 }
