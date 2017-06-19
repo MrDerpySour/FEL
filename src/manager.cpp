@@ -149,7 +149,6 @@ bool Manager::executeSub(const int& evnt_id) {
 FEL_API bool Manager::add(const Event& evnt, const std::string& scope, const bool& update) {
   if (events_[scope].find(evnt.id) == events_[scope].end()) {
     events_[scope].insert(std::make_pair(evnt.id, evnt));
-    return true;
   } else {
     if (update) {
       events_[context_.scope][evnt.id] = evnt;
@@ -158,6 +157,8 @@ FEL_API bool Manager::add(const Event& evnt, const std::string& scope, const boo
       return false;
     }
   }
+
+  return true;
 }
 
 bool Manager::executeBytecode(const int& event_executed) {
