@@ -23,7 +23,7 @@ Flag Event Language or FEL is a simple scripting language inspired by Cave Story
 
 ## Misc
 * [Special Thanks](special-thanks)
-* [Contact](contact)
+* [Contact](https://lunatoid.github.io/)
 
 -----
 ### Notepad++ Themes
