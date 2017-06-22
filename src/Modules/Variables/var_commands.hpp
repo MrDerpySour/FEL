@@ -39,7 +39,7 @@ class FelDeleteVar : public CommandClass {
     memory_(memory) {}
 
   FEL_API void execute(const std::string& parameters, FlagList*, Context* context) {
-    memory_->remove(context->parseVariableString(parameters));
+    memory_->remove(context->parseVariableString(parameters), context);
   }
 
  private:

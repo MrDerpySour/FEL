@@ -99,7 +99,7 @@ class Manager {
   /**
    * @return A pointer to the manager's context
    */
-  FEL_API const Context* context() const { return &context_; }
+  FEL_API Context* context() { return &context_; }
 
   /**
    * Saves the current instructions

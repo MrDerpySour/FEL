@@ -11,27 +11,27 @@ void FelRegisterVar::execute(const std::string& parameters, FlagList*, Context* 
   Var var;
 
   if (tmp.size() != 3) {
-    printf("Error: invalid argument count (3 expected)\n");
+    context->print("Error: invalid argument count (3 expected)\n");
     return;
   }
 
   if (tmp[0].find('%') != std::string::npos) {
-    printf("Error: '%%' is not allowed in variable names\n");
+    context->print("Error: '%%' is not allowed in variable names\n");
     return;
   }
 
   if (tmp[0].length() == 0) {
-    printf("Error: variable name can't be empty\n");
+    context->print("Error: variable name can't be empty\n");
     return;
   }
 
   if (tmp[0] == "id") {
-    printf("Error: 'id' is a preserved name\n");
+    context->print("Error: 'id' is a preserved name\n");
     return;
   }
 
   if (tmp[0] == "scope") {
-    printf("Error: 'scope' is a preserved name\n");
+    context->print("Error: 'scope' is a preserved name\n");
     return;
   }
 
@@ -42,7 +42,7 @@ void FelRegisterVar::execute(const std::string& parameters, FlagList*, Context* 
   else if (tmp[1] == "string")
     var.type = FelVarType::kString;
   else {
-    printf("Error: unidentified variable type\n\tType '%s'\n", tmp[1].c_str());
+    context->print("Error: unknown variable type '" + tmp[1] + "' detected\n");
     return;
   }
 
@@ -50,18 +50,18 @@ void FelRegisterVar::execute(const std::string& parameters, FlagList*, Context* 
     try {
       var.float_value = std::stof(tmp[2]);
     } catch (...) {
-      printf("Error: invalid variable value\n\tValue '%s'\n", tmp[2].c_str());
+      context->print("Error: invalid variable value '" + tmp[2] + "'\n");
     }
   } else
     var.string_value = tmp[2];
 
-  memory_->add(var);
+  memory_->add(var, context);
 }
 
 void FelSetVar::execute(const std::string& parameters, FlagList*, Context* context) {
   std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
   if (memory_->variables_.find(tmp[0]) != memory_->variables_.end()) {
-    Var var = memory_->get(tmp[0]);
+    Var var = memory_->get(tmp[0], context);
     switch (var.type) {
       case FelVarType::kString: {
         memory_->variables_[tmp[0]].string_value = tmp[1];
@@ -72,7 +72,7 @@ void FelSetVar::execute(const std::string& parameters, FlagList*, Context* conte
         break; }
     }
   } else {
-    printf("Error: variable not found\n\tVariable '%s'\n", tmp[0].c_str());
+    context->print("Error: variable '" + tmp[0] + "' not found\n");
   }
 }
 
@@ -80,7 +80,7 @@ void FelCompareVar::execute(const std::string& parameters, FlagList*, Context* c
   std::vector<std::string> tmp = helper::tokenize(context->parseVariableString(parameters), '|');
 
   if (!(tmp.size() == 3 || tmp.size() == 4)) {
-    printf("Error: invalid argument count (3/4 expected)");
+    context->print("Error: invalid argument count (3/4 expected)");
   }
 
   if (tmp[0] == tmp[1]) {
@@ -91,7 +91,7 @@ void FelCompareVar::execute(const std::string& parameters, FlagList*, Context* c
 
       parent_->executeSub(evnt_id);
     } catch (...) {
-      printf("Error: invalid argument type (int expected)\n");
+      context->print("Error: invalid argument type (int expected)\n");
       return;
     }
   }

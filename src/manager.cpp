@@ -28,11 +28,11 @@ void Manager::load(const std::string& file_path) {
     
   std::string scope = "";
   std::string line = "";
-  bool debug_print = false;
+  bool debug_print_ = false;
 
   while (std::getline(file, line)) {
     if (line == "#debugprint") {
-	    debug_print = true;
+      debug_print_ = true;
     } else {
       Event evnt = Interpreter::inject(line, scope, &file, &context_);
       if (evnt.id != -1) {
@@ -51,10 +51,10 @@ void Manager::load(const std::string& file_path) {
   }
 
   if (context_.vars_file_path_ != "" && context_.getModuleVariablesMemory() != nullptr) {
-    context_.getModuleVariablesMemory()->loadVariables(context_.vars_file_path_);
+    context_.getModuleVariablesMemory()->loadVariables(context_.vars_file_path_, &context_);
   }
 
-  if (debug_print) {
+  if (debug_print_) {
     printDebug();
   }
 }
@@ -75,7 +75,7 @@ bool Manager::execute(const int& event_id, const std::string& scope) {
       index_backups_.pop();
     }
 
-    printf("%s", msg_.c_str());
+    context_.print(msg_);
 
     fatal_error_ = false;
     msg_ = "No error message available";
@@ -103,14 +103,14 @@ bool Manager::executeSub(const int& evnt_id) {
   auto group_it = events_.find(context_.scope.c_str());
 
   if (group_it == events_.end()) {
-    printf("Error: no group found with name '%s'\n", context_.scope.c_str());
+    context_.print("Error: no group found with name '" + context_.scope +"'\n");
     return false;
   }
 
   auto evnt_it = group_it->second.find(evnt_id);
 
   if (evnt_it == group_it->second.end()) {
-    printf("Error: no event found with id '%d'\n", evnt_id);
+    context_.print("Error: no event found with id '" + std::to_string(evnt_id) + "'\n");
     return false;
   }
 
@@ -119,22 +119,22 @@ bool Manager::executeSub(const int& evnt_id) {
   // Error catching
 
   if (context_.current_instructions[0].byte_code == kFelError) {
-    printf("Error: event '%d' didn't compile correctly\n", evnt_it->first);
+    context_.print("Error: event '" + std::to_string(evnt_it->first) + "' didn't compile correctly\n");
     return false;
   }
 
   if (context_.current_instructions.size() < 2) {
-    printf("Error: invalid amount of instructions parsed for event '%d'\n", evnt_it->first);
+    context_.print("Error: invalid amount of instructions parsed for event '" + std::to_string(evnt_it->first) + "'\n");
     return false;
   }
 
   if (context_.current_instructions[0].byte_code != kStart) {
-    printf("Error: no starting point defined for event '%d'\n", evnt_it->first);
+    context_.print("Error: no starting point defined for event '" + std::to_string(evnt_it->first) + "'\n");
     return false;
   }
 
   if (context_.current_instructions[context_.current_instructions.size() - 1].byte_code != kEnd) {
-    printf("Error: no end point defined for event '%d'\n", evnt_it->first);
+    context_.print("Error: no end point defined for event '" + std::to_string(evnt_it->first) + "'\n");
     return false;
   }
 
@@ -153,7 +153,7 @@ FEL_API bool Manager::add(const Event& evnt, const std::string& scope, const boo
     if (update) {
       events_[context_.scope][evnt.id] = evnt;
     } else {
-      printf("Error: event with id already exists\n\tID: %d\n", evnt.id);
+      context_.print("Error: event with ID '" + std::to_string(evnt.id) +"' already exists\n");
       return false;
     }
   }
@@ -171,7 +171,7 @@ bool Manager::executeBytecode(const int& event_executed) {
     switch (context_.current_instructions[context_.instruction_index].byte_code) {
 
       case kFelError: {
-        printf("Error: event '%d' didn't compile correctly\n", event_executed);
+        context_.print("Error: event '" + std::to_string(event_executed) + "' didn't compile correctly\n");
         return false; }
 
       case kStart: {
@@ -184,7 +184,7 @@ bool Manager::executeBytecode(const int& event_executed) {
         std::vector<std::string> tmp = helper::tokenize(context_.current_instructions[context_.instruction_index].parameters, '|');
 
         if (!(tmp.size() == 2 || tmp.size() == 3)) {
-          printf("Error: invalid argument count (2/3 expected)\n");
+          context_.print("Error: invalid argument count (2/3 expected)\n");
           return false;
         }
 
@@ -200,7 +200,7 @@ bool Manager::executeBytecode(const int& event_executed) {
             }
           }
         } catch (...) {
-          printf("Error: invalid argument type (int expected)\n");
+          context_.print("Error: invalid argument type (int expected)\n");
           return false;
         }
         break; }
@@ -217,12 +217,12 @@ bool Manager::executeBytecode(const int& event_executed) {
               if (flags_.at_id(fls_flag_id) != nullptr)
                 flags_.at_id(fls_flag_id)->set();
             } catch (...) {
-              printf("Error: invalid flag ID\n");
+              context_.print("Error: invalid flag ID\n");
               return false;
             }
           }
         } catch (...) {
-          printf("Error: invalid argument type (expected int)\n");
+          context_.print("Error: invalid argument type (expected int)\n");
           return false;
         }
         break; }
@@ -239,12 +239,12 @@ bool Manager::executeBytecode(const int& event_executed) {
               if (flags_.at_id(flu_flag_id) != nullptr)
                 flags_.at_id(flu_flag_id)->set(false);
             } catch (...) {
-              printf("Error: invalid flag ID\n");
+              context_.print("Error: invalid flag ID\n");
               return false;
             }
           }
         } catch (...) {
-          printf("Error: invalid argument type (expected int)\n");
+          context_.print("Error: invalid argument type (expected int)\n");
           return false;
         }
         break; }
@@ -254,7 +254,7 @@ bool Manager::executeBytecode(const int& event_executed) {
           int flt_flag_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters)));
 
           if (flt_flag_id < 0 || flt_flag_id > UINT16_MAX) {
-            printf("Error: invalid flag ID\n");
+            context_.print("Error: invalid flag ID\n");
             return false;
           }
 
@@ -269,18 +269,18 @@ bool Manager::executeBytecode(const int& event_executed) {
               if (flags_.at_id(flt_flag_id) != nullptr)
                 flags_.at_id(flt_flag_id)->set();
             } catch (...) {
-              printf("Error: invalid flag ID\n");
+              context_.print("Error: invalid flag ID\n");
               return false;
             }
           }
         } catch (...) {
-          printf("Error: invalid argument type (expected int)\n");
+          context_.print("Error: invalid argument type (expected int)\n");
           return false;
         }
         break; }
 
       case kPri: {
-        printf("%s", context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters).c_str());
+        context_.print(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters));
         break; }
 
       case kEsc: {
@@ -290,7 +290,7 @@ bool Manager::executeBytecode(const int& event_executed) {
         std::vector<std::string> tmp = helper::tokenize(context_.parseVariableString(context_.current_instructions[context_.instruction_index].parameters), '|');
 
         if (!(tmp.size() == 1 || tmp.size() == 2)) {
-          printf("Error: invalid argument count (1/2 expected)\n");
+          context_.print("Error: invalid argument count (1/2 expected)\n");
           return false;
         }
 
@@ -306,7 +306,7 @@ bool Manager::executeBytecode(const int& event_executed) {
          restoreState();
 
         } catch (...) {
-          printf("Error: invalid argument type (int expected)\n");
+          context_.print("Error: invalid argument type (int expected)\n");
           return false;
         }
         break; }
@@ -317,7 +317,7 @@ bool Manager::executeBytecode(const int& event_executed) {
           auto build_it = events_[context_.scope].find(bld_event_id);
 
           if (bld_event_id < 0) {
-            printf("Error: invalid ID\n");
+            context_.print("Error: invalid ID\n");
             return false;
           }
 
@@ -326,7 +326,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
           add(evnt, context_.scope, true);
         } catch (...) {
-          printf("Error: invalid argument type (int expected)\n");
+          context_.print("Error: invalid argument type (int expected)\n");
           return false;
         }
         break; }
@@ -339,7 +339,7 @@ bool Manager::executeBytecode(const int& event_executed) {
         std::vector<std::string> tmp = helper::tokenize(context_.current_instructions[context_.instruction_index].parameters, '|');
 
         if (!(tmp.size() == 2 || tmp.size() == 3)) {
-          printf("Error: invalid argument count (2/3 expected)\n");
+          context_.print("Error: invalid argument count (2/3 expected)\n");
           return false;
         }
 
@@ -350,7 +350,7 @@ bool Manager::executeBytecode(const int& event_executed) {
           evnt_id = static_cast<int>(helper::parseMathString(context_.parseVariableString(tmp[0])));
           count = static_cast<int>(helper::parseMathString(context_.parseVariableString(tmp[1])));
         } catch (...) {
-          printf("Error: invalid argument type (int expected)\n");
+          context_.print("Error: invalid argument type (int expected)\n");
           return false;
         }
 
@@ -370,7 +370,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
       case kFelFunc: {
         if (context_.current_instructions[context_.instruction_index].parameters.length() <= 2) {
-          printf("Error: invalid length\n");
+          context_.print("Error: invalid length\n");
           return false;
         }
 
@@ -379,7 +379,7 @@ bool Manager::executeBytecode(const int& event_executed) {
           size_t func_seperate_index = str.find_last_of('}');
 
           if (func_seperate_index == std::string::npos) {
-            printf("Error: invalid function call\n");
+            context_.print("Error: invalid function call\n");
             return false;
           }
 
@@ -393,18 +393,18 @@ bool Manager::executeBytecode(const int& event_executed) {
             
             it->second->execute(tmp[1], &flags_, &context_);
           } catch (...) {
-            printf("Error: command '%s' not found\n", tmp[0].c_str());
+            context_.print("Error: command '" + tmp[0] + "' not found\n");
             return false;
           }
         } else {
-          printf("Error: invalid function call\n");
+          context_.print("Error: invalid function call\n");
           return false;
         }
 
         break; }
 
       default: {
-        printf("Error: undefined tokens found (token: '%s')\n", ByteCodeString[context_.current_instructions[context_.instruction_index].byte_code]);
+        context_.print("Error: undefined tokens found (token: '" + std::string(ByteCodeString[context_.current_instructions[context_.instruction_index].byte_code]) + "')\n");
         return false;
         break; }
     }
@@ -435,7 +435,7 @@ bool Manager::loadFlags(const std::string& file_path) {
     if (line[0] != '#') {
       tmp = helper::tokenize(line, '=');
       if (tmp.size() != 2) {
-        printf("Error: invalid markup\n");
+        context_.print("Error: invalid markup\n");
         return false;
       }
 
@@ -444,7 +444,7 @@ bool Manager::loadFlags(const std::string& file_path) {
         (std::stoi(tmp[1]) == 1) ? flags_.at_id(std::stoi(tmp[0]))->set(true) : flags_.at_id(std::stoi(tmp[0]))->set(false);
       }
       catch (...) {
-        printf("Error: invalid value type (int expected)\n");
+        context_.print("Error: invalid value type (int expected)\n");
         return false;
       }
     }
@@ -455,7 +455,7 @@ bool Manager::loadFlags(const std::string& file_path) {
 void Manager::registerFunction(const std::string& syntax, CommandClass* func) {
   
   if (std::string(syntax).find('-') != std::string::npos) {
-    printf("Error: '-' is not allowed in function syntax\n");
+    context_.print("Error: '-' is not allowed in function syntax\n");
     return;
   }
 
@@ -470,14 +470,14 @@ void Manager::registerFunction(const std::string& syntax, CommandClass* func) {
   if (!context_.ignore_case_) {
     for (int i = kFelBegin; i != kFelEnd; ++i) {
       if (strcmp(ByteCodeString[i], syntax.c_str()) == 0) {
-        printf("Error: function overrides are not supported\n");
+        context_.print("Error: function overrides are not supported\n");
         return;
       }
     }
   } else {
     for (int i = kFelBegin; i != kFelEnd; ++i) {
       if (strcmp(ByteCodeString[i], syntax_upper.c_str()) == 0) {
-        printf("Error: function overrides are not supported\n");
+        context_.print("Error: function overrides are not supported\n");
         return;
       }
     }
@@ -488,17 +488,17 @@ void Manager::registerFunction(const std::string& syntax, CommandClass* func) {
       if (custom_commands_.find(syntax) == custom_commands_.end()) {
         custom_commands_.insert(std::make_pair(syntax, func));
       } else {
-        printf("Error: command with that syntax already exists\n\tSyntax '%s'\n", syntax.c_str());
+        context_.print("Error: command with that syntax '" + syntax + "' already exists\n");
       }
     } else {
       if (custom_commands_.find(syntax_upper) == custom_commands_.end()) {
         custom_commands_.insert(std::make_pair(syntax_upper, func));
       } else {
-        printf("Error: command with that syntax already exists\n\tSyntax '%s'\n", syntax_upper.c_str());
+        context_.print("Error: command with that syntax '" + syntax_upper + "' already exists\n");
       }
     }
   } catch (...) {
-    printf("Error: something went wrong registering function\n");
+    context_.print("Error: something went wrong registering function\n");
     return;
   }
 }
@@ -508,35 +508,34 @@ const bool& Manager::is_set(const flag_id& id) {
 }
 
 void Manager::printDebug() {
-  printf("Loaded modules:");
+  context_.print("Loaded modules:");
   for (size_t i = 0; i < context_.module_directives_.size(); ++i) {
-    printf("\n\t-%s", context_.module_directives_[i].c_str());
+    context_.print("\n\t-" + context_.module_directives_[i]);
   }
 
-  printf("\n\n\nLinked files:");
+  context_.print("\n\n\nLinked files:");
   for (size_t i = 0; i < context_.link_directives_.size(); ++i) {
-    printf("\n\t-%s", context_.link_directives_[i].c_str());
+    context_.print("\n\t-" + context_.link_directives_[i]);
   }
 
-  printf("\n\n\nEvents:");
+  context_.print("\n\n\nEvents:");
 
   for (auto it = events_.begin(); it != events_.end(); ++it) {
     for (int i = 0; i < static_cast<int>(it->second.size()); ++i) {
-      // Don't print illegal events
+      // Don't context_.print illegal events
       if (it->second[i].id != -1) {
-        printf("\n %s %d:\n", ((it->first == "") ? "" : ("'" + std::string(it->first) + "'").c_str()),  it->second[i].id);
+        context_.print("\n " + (it->first == "") ? "" : ("'" + std::string(it->first) + "'") + " " + std::to_string(it->second[i].id) + ":\n");
 
         for (size_t instr = 0; instr < it->second[i].instructions.size(); ++instr) {
-          printf("\t%s\t[ %s ]\n", ByteCodeString[it->second[i].instructions.at(instr).byte_code],
-                 it->second[i].instructions[instr].parameters.c_str());
+          context_.print("\t" + std::string(ByteCodeString[it->second[i].instructions.at(instr).byte_code]) + "\t[ " + it->second[i].instructions[instr].parameters + " ]\n");
         }
       }
 
-      printf("\n");
+      context_.print("\n");
     }
   }
 
-  printf("\n---\n\n");
+  context_.print("\n---\n\n");
 }
 
 void Manager::loadLinkedFiles() {
@@ -564,7 +563,7 @@ void Manager::loadLinkedFiles() {
       file.open(context_.link_directives_[i]);
 
       if (file.fail()) {
-        printf("Error: could not open link directive\n\tPath: %s\n", context_.link_directives_[i].c_str());
+        context_.print("Error: could not open link directive\n\tPath: " + context_.link_directives_[i] +"\n");
         return;
       }
 
@@ -609,7 +608,7 @@ void Manager::loadModules() {
         context_.module_variables_manager_ = std::make_unique<modules::variables::VariablesManager>(this);
         context_.module_variables_manager_->reg();
       } else {
-        printf("Error: module not found\n\tModule '%s'\n", module_name.c_str());
+        context_.print("Error: module not found\n\tModule '" + module_name +"'\n");
         return;
       }
 

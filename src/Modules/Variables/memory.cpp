@@ -8,7 +8,7 @@ namespace fel {
 namespace modules {
 namespace variables {
 
-bool VariablesMemory::add(const Var& var) {
+bool VariablesMemory::add(const Var& var, Context* context) {
   if (var.type == FelVarType::kNull)
     return false;
 
@@ -16,27 +16,28 @@ bool VariablesMemory::add(const Var& var) {
     variables_.insert(std::make_pair(var.name, var));
     return true;
   } else {
-    printf("Error: variable '%s' already defined\n", var.name.c_str());
+    context->print("Error: variable '" + var.name + "' already defined\n");
     return false;
   }
 }
 
-bool VariablesMemory::remove(const std::string& name) {
+bool VariablesMemory::remove(const std::string& name, Context* context, const bool& supress) {
   if (variables_.find(name) != variables_.end()) {
     variables_.erase(name);
     return true;
   } else {
-    printf("Error: variable '%s' does not exist\n", name.c_str());
+    if (!supress)
+      context->print("Error: variable '" + name + "' does not exist\n");
     return false;
   }
 }
 
-Var VariablesMemory::get(const std::string& name, const bool& supress)  const {
+Var VariablesMemory::get(const std::string& name, Context* context, const bool& supress)  const {
   if (variables_.find(name) != variables_.end()) {
     return variables_.at(name);
   } else {
     if (!supress)
-      printf("Error: variable '%s' does not exist\n", name.c_str());
+      context->print("Error: variable '" + name + "' does not exist\n");
     return Var();
   }
 }
@@ -58,7 +59,7 @@ bool VariablesMemory::saveVariables(const std::string& path) {
   return helper::createFile(path, contents);
 }
 
-bool VariablesMemory::loadVariables(const std::string& path) {
+bool VariablesMemory::loadVariables(const std::string& path, Context* context) {
   std::fstream file(path);
 
   if (file.fail())
@@ -96,7 +97,7 @@ bool VariablesMemory::loadVariables(const std::string& path) {
           break; }
       }
 
-      add(var);
+      add(var, context);
     }
   }
 

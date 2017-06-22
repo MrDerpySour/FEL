@@ -25,13 +25,21 @@ std::string Context::parseVariableString(const std::string& unparsed) {
   }
 
   for (size_t i = 0; i < matches.size(); ++i) {
-    modules::variables::Var var = getModuleVariablesMemory()->get(matches[i], true);
+    modules::variables::Var var = getModuleVariablesMemory()->get(matches[i], this, true);
     if (var.type != modules::variables::FelVarType::kNull)
       helper::str_replace_all(str, "%" + matches[i] + "%",
       (var.type == modules::variables::FelVarType::kString) ? var.string_value : std::to_string(var.float_value));
   }
 
   return str;
+}
+
+void Context::print(const std::string& str) {
+  *method_ << str;
+}
+
+void Context::setPrintMethod(std::ostream* method) {
+  method_ = method;
 }
 
 modules::variables::VariablesMemory * Context::getModuleVariablesMemory() {

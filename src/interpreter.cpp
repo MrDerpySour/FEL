@@ -19,7 +19,7 @@ void Interpreter::compile(Event* evnt,
   std::string current_scope = "";
 
   if (file.fail()) {
-    printf("Error: something went wrong loading file\n\tPath: '%s'\n", file_path.c_str());
+    context->print("Error: something went wrong loading file '" + file_path + "'\n");
     return;
   }
 
@@ -67,7 +67,7 @@ void Interpreter::compile(Event* evnt,
     }
   }
 
-  printf("Error: no event found with ID '%d'%s\n", evnt_id, ((scope == "") ? "" : (" in scope " + scope).c_str()));
+  context->print("Error: no event found with ID '" + std::to_string(evnt_id) + ((scope == "") ? "" : (" in scope " + scope).c_str()) + "\n");
 }
 
 Event Interpreter::inject(const std::string& code,
@@ -126,7 +126,7 @@ void Interpreter::inject(Event* evnt,
         if (helper::fileExists(path)) {
           context->link_directives_.push_back(path);
         } else {
-          printf("Error: link path doesn't exist\n\tPath: %s\n", path.c_str());
+          context->print("Error: link path '" + path + "' doesn't exist\n");
         }
         return;
       }
@@ -176,7 +176,7 @@ void Interpreter::inject(Event* evnt,
       }
 
       // If it didn't match any, give an error
-      printf("Error: unknown link directive\n\tDirective \"%s\"\n", cmd.c_str());
+      context->print("Error: link directive '" + cmd + "' is not recognized\n");
     }
 
     size_t i = line.find_first_of('>');
@@ -195,13 +195,13 @@ void Interpreter::inject(Event* evnt,
           return;
         }
       } else if (i != std::string::npos && multi_line_event) {
-        printf("Error: event '%d' leaks into event '%d'\n", evnt->id, std::stoi(line.substr(0, i)));
+        context->print("Error: event '" + std::to_string(evnt->id) + "' leaks into event '" + line.substr(0, i) + "'\n");
         evnt->instructions = { Instruction(kFelError, "") };
         return;
       }
     }
     catch (...) {
-      printf("Error: ID couldn't be found\n");
+      context->print("Error: ID couldn't be parsed\n");
       evnt->instructions = { Instruction(kFelError, line) };
       return;
     }
@@ -211,7 +211,7 @@ void Interpreter::inject(Event* evnt,
 
   // Check if end is defined
   if (line.back() != '|' && line.back() != '$') {
-    printf("Error: no end marker found\n");
+    context->print("Error: no end marker found on event '" + std::to_string(evnt->id) + "'\n");
     evnt->instructions = { Instruction(kFelError, line) };
     return;
   } else if (line.back() == '|') {
@@ -262,7 +262,7 @@ void Interpreter::inject(Event* evnt,
     size_t index = unparsed_cmds[i].find_first_of('[');
 
     if (index == std::string::npos) {
-      printf("Error: no parameter block openeded\n");
+      context->print("Error: no parameter block openeded for event '" + std::to_string(evnt->id) + "' on command '" + unparsed_cmds[i] +"'\n");
       evnt->instructions = { Instruction(kFelError, unparsed_cmds[i]) };
       return;
     }
@@ -273,13 +273,13 @@ void Interpreter::inject(Event* evnt,
     size_t closing_brace_index = tmp[1].find_last_of(']');
     
     if (closing_brace_index == std::string::npos) {
-      printf("Error: unmatched brackets in parameters block\n");
+      context->print("Error: unmatched brackets in parameters block for event '" + std::to_string(evnt->id) + "' on command '" + tmp[0] + "'\n");
       evnt->instructions = { Instruction(kFelError, tmp[1]) };
       return;
     }
     
     if (tmp[1].substr(closing_brace_index).length() > 1) {
-      printf("Error: trailing tokens after parameters block found\n\t\tTokens: '%s'\n", tmp[1].substr(closing_brace_index + 1).c_str());
+      context->print("Error: trailing tokens '" + tmp[1].substr(closing_brace_index + 1) + "' after parameters block found for event '" + std::to_string(evnt->id) + "' on command '" + tmp[0] + "'\n");
       evnt->instructions = { Instruction(kFelError, tmp[1].substr(closing_brace_index + 1)) };
       return;
     }

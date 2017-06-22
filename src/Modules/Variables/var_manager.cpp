@@ -9,6 +9,6 @@ void fel::modules::variables::VariablesManager::reg() {
     parent_->registerFunction("DEL", &delcmd_);
     parent_->registerFunction("CMP", &cmpcmd_);
   } catch (...) {
-    printf("Error: something went wrong registering function\n");
+    parent_->context()->print("Error: something went wrong registering function\n");
   }
 }

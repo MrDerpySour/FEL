@@ -4,9 +4,9 @@
 #include "fel.hpp"
 
 #include <memory>
-
 #include <vector>
 #include <string>
+#include <iostream>
 
 #include "byte_code.hpp"
 
@@ -30,6 +30,13 @@ friend class Interpreter;
    * @return The parsed string
    */
   FEL_API std::string parseVariableString(const std::string& unparsed);
+
+  FEL_API void print(const std::string& str);
+
+  /**
+   * @param method The method of printing
+   */
+  FEL_API void setPrintMethod(std::ostream* method);
 
   // Getters
 
@@ -86,6 +93,10 @@ friend class Interpreter;
   std::string vars_file_path_ = "";
   bool debug_mode_ = false;
   bool ignore_case_ = false;
+
+  // Print method
+  std::ostream* method_ = &std::cout;
+
 };
 
 } // namespace fel
