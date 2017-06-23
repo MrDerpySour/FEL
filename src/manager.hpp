@@ -32,6 +32,25 @@ class Manager {
     load(file_path);
   }
 
+  /**
+   * Sets a new print function
+   * @param print_func The function used for all output
+   */
+  FEL_API Manager(std::function<void(std::string)> print_func) {
+    context_.setPrintFunc(print_func);
+  }
+
+  /**
+   * Loads a source file and sets a new print function
+   * @param file_path The filepath to the file
+   * @param print_func The function used for all output
+   */
+  FEL_API Manager(const std::string& file_path,
+                  std::function<void(std::string)> print_func) {
+    context_.setPrintFunc(print_func);
+    load(file_path);
+  }
+
   FEL_API ~Manager();
 
   /**

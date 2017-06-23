@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <functional>
 
 #include "byte_code.hpp"
 
@@ -31,12 +32,12 @@ friend class Interpreter;
    */
   FEL_API std::string parseVariableString(const std::string& unparsed);
 
-  FEL_API void print(const std::string& str);
+  FEL_API void print(std::string str);
 
   /**
    * @param method The method of printing
    */
-  FEL_API void setPrintMethod(std::ostream* method);
+  FEL_API void setPrintFunc(std::function<void(std::string str)> func);
 
   // Getters
 
@@ -94,9 +95,10 @@ friend class Interpreter;
   bool debug_mode_ = false;
   bool ignore_case_ = false;
 
-  // Print method
-  std::ostream* method_ = &std::cout;
-
+  // Print function
+  std::function<void(std::string str)> print_func_ = [&](std::string str) {
+    std::cout << str;
+  };
 };
 
 } // namespace fel

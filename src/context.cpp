@@ -34,12 +34,12 @@ std::string Context::parseVariableString(const std::string& unparsed) {
   return str;
 }
 
-void Context::print(const std::string& str) {
-  *method_ << str;
+void Context::print(std::string str) {
+  std::invoke(print_func_, str);
 }
 
-void Context::setPrintMethod(std::ostream* method) {
-  method_ = method;
+void Context::setPrintFunc(std::function<void(std::string str)> func) {
+  print_func_ = func;
 }
 
 modules::variables::VariablesMemory * Context::getModuleVariablesMemory() {
