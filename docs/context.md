@@ -21,7 +21,8 @@ Here is a list of what the context allows you to do:
 ## Print
 
 The context's `print` function is where all the text output in FEL is done.  
-By default, the method is set to `std::cout` but this can be changed to any `std::ostream` by using the `setPrintMethod` function.
+The print method is a wrapper function that invokes the `std::function`.  
+The default print function is set to a lambda function that uses `std::cout`.  
 
 Example:
 ```cpp
@@ -29,10 +30,15 @@ fel::Manager manager;
 
 std::ofstream of("output.txt");
 
-// Now everything will be outputted to output.txt
-manager.context()->setPrintMethod(&of);
+// With this function all output will be put into "output.txt" and printed on the screen
+manager.context()->setPrintFunc([&](std::string str) {
+  of << str;
+  std::cout << str;
+});
 
 manager.load("file.fel");
+
+// ...
 ```
 
 <h3 align="center"><a href="custom-commands">Next</a></h3>
