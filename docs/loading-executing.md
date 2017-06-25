@@ -3,7 +3,7 @@
 # Loading & Executing
 -----
 
-First of all, I will assume you know how to build and compile the repo into a .dll file and how to link it to your C++ project.
+First of all, I will assume you know how to compile the repository into a static library (.lib) and link it to your C++ project.
 
 Let's start with a blank `main.cpp` file.
 ```cpp
