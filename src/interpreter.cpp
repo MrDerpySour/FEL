@@ -1,6 +1,7 @@
 #include "interpreter.hpp"
 
 #include <fstream>
+#include <string.h>
 
 #include "helper.hpp"
 
