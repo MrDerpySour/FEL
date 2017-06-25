@@ -1,8 +1,6 @@
 #ifndef FEL_VARIABLES_MANAGER_HPP_
 #define FEL_VARIABLES_MANAGER_HPP_
 
-#include "../../fel.hpp"
-
 #include "memory.hpp"
 #include "var_commands.hpp"
 
@@ -17,16 +15,16 @@ namespace variables {
 class VariablesManager {
 friend class Manager;
  public:
-  FEL_API VariablesManager(fel::Manager* parent) :
+  VariablesManager(fel::Manager* parent) :
     regcmd_(&memory_),
     setcmd_(&memory_),
     delcmd_(&memory_),
     cmpcmd_(parent),
     parent_(parent) {}
 
-  FEL_API void reg();
+  void reg();
 
-  FEL_API VariablesMemory* mem() { return &memory_; }
+  VariablesMemory* mem() { return &memory_; }
 
  private:
   VariablesMemory memory_;

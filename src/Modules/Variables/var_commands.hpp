@@ -1,7 +1,6 @@
 #ifndef FEL_VARIABLES_COMMANDS_HPP_
 #define FEL_VARIABLES_COMMANDS_HPP_
 
-#include "../../fel.hpp"
 #include "../../helper.hpp"
 
 #include "memory.hpp"
@@ -16,7 +15,7 @@ class FelRegisterVar : public CommandClass {
   FelRegisterVar(VariablesMemory* memory) :
     memory_(memory) {}
 
-  FEL_API void execute(const std::string& parameters, FlagList* list, Context* context);
+  void execute(const std::string& parameters, FlagList* list, Context* context);
 
  private:
   VariablesMemory* memory_ = nullptr;
@@ -27,7 +26,7 @@ class FelSetVar : public CommandClass {
   FelSetVar(VariablesMemory* memory) :
     memory_(memory) {}
 
-  FEL_API void execute(const std::string& parameters, FlagList* list, Context* context);
+  void execute(const std::string& parameters, FlagList* list, Context* context);
 
  private:
   VariablesMemory* memory_ = nullptr;
@@ -38,7 +37,7 @@ class FelDeleteVar : public CommandClass {
   FelDeleteVar(VariablesMemory* memory) :
     memory_(memory) {}
 
-  FEL_API void execute(const std::string& parameters, FlagList*, Context* context) {
+  void execute(const std::string& parameters, FlagList*, Context* context) {
     memory_->remove(context->parseVariableString(parameters), context);
   }
 
@@ -51,7 +50,7 @@ class FelCompareVar : public CommandClass {
   FelCompareVar(fel::Manager* parent) :
     parent_(parent) {}
 
-  FEL_API void execute(const std::string& parameters, FlagList* list, Context* context);
+  void execute(const std::string& parameters, FlagList* list, Context* context);
 
  private:
   fel::Manager* parent_ = nullptr;

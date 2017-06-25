@@ -1,8 +1,6 @@
 #ifndef FEL_CONTEXT_HPP_
 #define FEL_CONTEXT_HPP_
 
-#include "fel.hpp"
-
 #include <memory>
 #include <vector>
 #include <string>
@@ -22,59 +20,59 @@ class Context {
 friend class Manager;
 friend class Interpreter;
  public:
-  FEL_API Context();
-  FEL_API ~Context();
+  Context();
+  ~Context();
 
   /**
    * Parses a string containing variables
    * @param unparsed The unparsed string
    * @return The parsed string
    */
-  FEL_API std::string parseVariableString(const std::string& unparsed);
+  std::string parseVariableString(const std::string& unparsed);
 
-  FEL_API void print(std::string str);
+  void print(std::string str);
 
   /**
    * @param method The method of printing
    */
-  FEL_API void setPrintFunc(std::function<void(std::string str)> func);
+  void setPrintFunc(std::function<void(std::string str)> func);
 
   // Getters
 
   /**
    * @return Whether #debug has been called or not
    */
-  FEL_API const bool& debugMode() const { return debug_mode_; }
+  const bool& debugMode() const { return debug_mode_; }
 
   /**
    * @return Whether #ignorecase has been called or not
    */
-  FEL_API const bool& ignoreCase() const { return ignore_case_; }
+  const bool& ignoreCase() const { return ignore_case_; }
 
   /**
    * @return All called #link directives
    */
-  FEL_API const std::vector<std::string>& getLinkDirectives() const { return link_directives_; }
+  const std::vector<std::string>& getLinkDirectives() const { return link_directives_; }
 
   /**
    * @return All called #module directives
    */
-  FEL_API const std::vector<std::string>& getModuleDirectives() const { return module_directives_; }
+  const std::vector<std::string>& getModuleDirectives() const { return module_directives_; }
 
   /**
    * @return The #flags filepath (if any)
    */
-  FEL_API const std::string& getFlagsFilePath() const { return flag_file_path_; }
+  const std::string& getFlagsFilePath() const { return flag_file_path_; }
 
   /**
    * @return The #vars filepath (if any)
    */
-  FEL_API const std::string& getVarsFilePath() const { return vars_file_path_; }
+  const std::string& getVarsFilePath() const { return vars_file_path_; }
 
   /**
    * @return A pointer to the VariablesManager, returns nullptr if it doesn't exist
    */
-  FEL_API modules::variables::VariablesMemory* getModuleVariablesMemory();
+  modules::variables::VariablesMemory* getModuleVariablesMemory();
 
   // Instructions
   std::vector<Instruction> current_instructions;

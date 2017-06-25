@@ -1,8 +1,6 @@
 #ifndef FEL_INTERPRETER_HPP_
 #define FEL_INTERPRETER_HPP_
 
-#include "fel.hpp"
-
 #include "event.hpp"
 #include "flag.hpp"
 #include "flag_list.hpp"
@@ -20,7 +18,7 @@ class Interpreter {
    * @param evnt_id The ID of the event
    * @param context The current context
    */
-  FEL_API static void compile(Event* evnt,
+  static void compile(Event* evnt,
                               const std::string& file_path,
                               const std::string& scope,
                               const int& evnt_id,
@@ -34,7 +32,7 @@ class Interpreter {
    * @param context A pointer to the context
    * @return An event created with the code
    */
-  FEL_API static Event inject(const std::string& code,
+  static Event inject(const std::string& code,
                               std::string& scope,
                               std::fstream* file,
                               Context* context);
@@ -47,7 +45,7 @@ class Interpreter {
    * @param file A pointer to the current file
    * @param context A pointer to the context
    */
-  FEL_API static void inject(Event* evnt,
+  static void inject(Event* evnt,
                              const std::string& code,
                              std::string& scope,
                              std::fstream* file,

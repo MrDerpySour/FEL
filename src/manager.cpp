@@ -146,7 +146,7 @@ bool Manager::executeSub(const int& evnt_id) {
   return result;
 }
 
-FEL_API bool Manager::add(const Event& evnt, const std::string& scope, const bool& update) {
+bool Manager::add(const Event& evnt, const std::string& scope, const bool& update) {
   if (events_[scope].find(evnt.id) == events_[scope].end()) {
     events_[scope].insert(std::make_pair(evnt.id, evnt));
   } else {

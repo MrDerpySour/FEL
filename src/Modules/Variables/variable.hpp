@@ -1,8 +1,6 @@
 #ifndef FEL_VARIABLES_VARIABLE_HPP_
 #define FEL_VARIABLES_VARIABLE_HPP_
 
-#include "../../fel.hpp"
-
 #include <string>
 
 namespace fel {
@@ -16,9 +14,9 @@ enum class FelVarType {
 };
 
 struct Var {
-  FEL_API Var() {}
+  Var() {}
 
-  FEL_API Var(const std::string& name,
+  Var(const std::string& name,
          const FelVarType& type,
          const std::string& val) :
     name(name),
@@ -26,7 +24,7 @@ struct Var {
     string_value(val) {}
 
 
-  FEL_API Var(const std::string& name,
+  Var(const std::string& name,
          const FelVarType& type,
          const float& val) :
     name(name),

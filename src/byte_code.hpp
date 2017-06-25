@@ -1,8 +1,6 @@
 #ifndef FEL_BYTE_CODE_HPP_
 #define FEL_BYTE_CODE_HPP_
 
-#include "fel.hpp"
-
 #include <string>
 
 namespace fel {
@@ -31,13 +29,13 @@ enum ByteCode {
 extern const char* ByteCodeString[];
 
 struct Instruction {
-  FEL_API Instruction() {}
+  Instruction() {}
 
   /**
    * @param byte_code The bytecode of the instruction
    * @param parameters The parameters of the instruction
    */
-  FEL_API Instruction(const ByteCode& byte_code, const std::string& parameters) :
+  Instruction(const ByteCode& byte_code, const std::string& parameters) :
     byte_code(byte_code), parameters(parameters) {}
 
   ByteCode byte_code;
