@@ -25,9 +25,9 @@
     <ClCompile Include="context.cpp" />
     <ClCompile Include="flag_list.cpp" />
     <ClCompile Include="manager.cpp" />
-    <ClCompile Include="Modules\Variables\memory.cpp" />
-    <ClCompile Include="Modules\Variables\var_commands.cpp" />
-    <ClCompile Include="Modules\Variables\var_manager.cpp" />
+    <ClCompile Include="var_commands.cpp" />
+    <ClCompile Include="var_manager.cpp" />
+    <ClCompile Include="var_memory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="byte_code.hpp" />
@@ -39,10 +39,10 @@
     <ClInclude Include="helper.hpp" />
     <ClInclude Include="interpreter.hpp" />
     <ClInclude Include="manager.hpp" />
-    <ClInclude Include="Modules\Variables\memory.hpp" />
-    <ClInclude Include="Modules\Variables\variable.hpp" />
-    <ClInclude Include="Modules\Variables\var_commands.hpp" />
-    <ClInclude Include="Modules\Variables\var_manager.hpp" />
+    <ClInclude Include="var_commands.hpp" />
+    <ClInclude Include="var_manager.hpp" />
+    <ClInclude Include="var_memory.hpp" />
+    <ClInclude Include="var_variable.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9EA25246-5601-4C07-8896-B380B4C18D6E}</ProjectGuid>
@@ -118,7 +118,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;FEL_EXPORTS;_DEBUG;_LIB;FEL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;FEL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ProgramDataBaseFileName>$(IntDir)$(ProjectName)-d.pdb</ProgramDataBaseFileName>
       <GenerateXMLDocumentationFiles>true</GenerateXMLDocumentationFiles>
     </ClCompile>
@@ -138,7 +138,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>FEL_EXPORTS;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,7 +150,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PreprocessorDefinitions>WIN32;FEL_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -172,7 +172,7 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <PreprocessorDefinitions>FEL_EXPORTS;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
