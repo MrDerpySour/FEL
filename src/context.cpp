@@ -35,7 +35,12 @@ std::string Context::parseVariableString(const std::string& unparsed) {
 }
 
 void Context::print(std::string str) {
+  // As far as I know, there is no official C++17 value for the __cplusplus macro
+#ifdef FEL_USE_CPP17
   std::invoke(print_func_, str);
+#else
+  print_func_(str);
+#endif
 }
 
 void Context::setPrintFunc(std::function<void(std::string str)> func) {
