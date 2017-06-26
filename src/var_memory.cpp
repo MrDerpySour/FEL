@@ -21,15 +21,8 @@ bool VariablesMemory::add(const Var& var, Context* context) {
   }
 }
 
-bool VariablesMemory::remove(const std::string& name, Context* context, const bool& supress) {
-  if (variables_.find(name) != variables_.end()) {
-    variables_.erase(name);
-    return true;
-  } else {
-    if (!supress)
-      context->print("Error: variable '" + name + "' does not exist\n");
-    return false;
-  }
+bool VariablesMemory::remove(const std::string& name, Context* context) {
+  variables_.erase(name);
 }
 
 Var VariablesMemory::get(const std::string& name, Context* context, const bool& supress)  const {

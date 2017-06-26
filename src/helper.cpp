@@ -51,12 +51,11 @@ bool fileExists(const std::string& file_path) {
 }
 
 bool createFile(const std::string& file_path, const std::string& contents) {
-  bool good = false;
   std::ofstream file(file_path, std::fstream::trunc);
   file << contents;
-  good = file.good();
-
+  bool good = file.good();
   file.close();
+
   return good;
 }
 

@@ -18,7 +18,7 @@ friend class FelDeleteVar;
  public:
   bool add(const Var& var, Context* context);
 
-  bool remove(const std::string& name, Context* context, const bool& supress = false);
+  bool remove(const std::string& name, Context* context);
 
   Var get(const std::string& name, Context* context, const bool& supress = false) const;
 

@@ -405,8 +405,7 @@ bool Manager::executeBytecode(const int& event_executed) {
 
       default: {
         context_.print("Error: undefined tokens found (token: '" + std::string(ByteCodeString[context_.current_instructions[context_.instruction_index].byte_code]) + "')\n");
-        return false;
-        break; }
+        return false; }
     }
   }
   return false;
