@@ -1,7 +1,7 @@
 
 # Variable declaration
 CC=g++
-CFLAGS=-c -O3 -std=c++1z
+CFLAGS=-c -O3 -std=c++17
 
 # Targets
 all: fel
