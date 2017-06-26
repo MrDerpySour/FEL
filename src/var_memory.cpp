@@ -21,7 +21,7 @@ bool VariablesMemory::add(const Var& var, Context* context) {
   }
 }
 
-bool VariablesMemory::remove(const std::string& name, Context* context) {
+void VariablesMemory::remove(const std::string& name, Context* context) {
   variables_.erase(name);
 }
 
