@@ -1,7 +1,7 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/Lunatoid/FEL/master/docs/FEL-badge-dark.png" style="max-width:100%; height:auto;" alt="Logo"/></p>
 
-<a href="https://ci.appveyor.com/project/Lunatoid/fel"><p align="center"><img src="https://ci.appveyor.com/api/projects/status/40a9g0j0uskbx1f1?svg=true" href="https://ci.appveyor.com/project/Lunatoid/fel" alt="Build status"/></p></a>
+<a href="https://ci.appveyor.com/project/Lunatoid/fel"><p align="center"><img src="https://ci.appveyor.com/api/projects/status/40a9g0j0uskbx1f1?svg=true" href="https://ci.appveyor.com/project/Lunatoid/fel" alt="Build status"/> [![Codacy Badge](https://api.codacy.com/project/badge/Grade/be9c32cac71145c3af905b0f0c692ae6)](https://www.codacy.com/app/lunatoid.contact/FEL?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Lunatoid/FEL&amp;utm_campaign=Badge_Grade)</p></a>
 
 -----
 
